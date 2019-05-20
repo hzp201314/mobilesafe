@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.home.appManager.AppManagerActivity">
+    <TextView
+        style="@style/ActivityTitleStyle"
+        android:text="软件管理"
+        />
+
+
+    <com.hzp.mobilesafe.view.CustomProgressBar
+        android:id="@+id/app_cpb_memory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        ></com.hzp.mobilesafe.view.CustomProgressBar>
+
+    <com.hzp.mobilesafe.view.CustomProgressBar
+        android:id="@+id/app_cpb_sd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        ></com.hzp.mobilesafe.view.CustomProgressBar>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <ListView
+            android:id="@+id/app_lv_apps"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            ></ListView>
+        <TextView
+            android:id="@+id/app_tv_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="用户程序(0)"
+            android:textSize="18sp"
+            android:textColor="#000000"
+            android:background="@android:color/darker_gray"
+            android:padding="8dp"
+            />
+    </RelativeLayout>
+</LinearLayout>

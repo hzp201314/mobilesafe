@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.home.commonTool.CommonNumberActivity">
+
+    <TextView
+        style="@style/ActivityTitleStyle"
+        android:text="常用号码查询"
+        />
+    <!-- ExpandableListView : 可扩展的listview  继承listview，操作跟listview相似
+         groupIndicator : 设置组的标签,@null:不要标签
+    -->
+    <ExpandableListView
+        android:id="@+id/commonnumber_elv_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:groupIndicator="@null"
+        ></ExpandableListView>
+
+</LinearLayout>

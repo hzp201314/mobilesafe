@@ -14,6 +14,7 @@ import com.hzp.mobilesafe.service.BlackNumberService;
 import com.hzp.mobilesafe.utils.Constants;
 import com.hzp.mobilesafe.utils.ServiceUtil;
 import com.hzp.mobilesafe.utils.SharedPreferencesUtil;
+import com.hzp.mobilesafe.view.MyDialog;
 import com.hzp.mobilesafe.view.SettingView;
 
 public class SettingActivity extends Activity {
@@ -21,6 +22,7 @@ public class SettingActivity extends Activity {
     private SettingView mUpdate;
     private SettingView mBlackNumber;
     private SettingView mAddress;
+    private SettingView mAddressStyle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +39,15 @@ public class SettingActivity extends Activity {
         mUpdate = (SettingView) findViewById(R.id.setting_sv_update);
         mBlackNumber = (SettingView) findViewById(R.id.setting_sv_blacknumber);
         mAddress = (SettingView) findViewById(R.id.setting_sv_address);
+        mAddressStyle = (SettingView) findViewById(R.id.setting_sv_addressstyle);
         //设置自动更新的条目的点击事件
         update();
         // 设置骚扰拦截的条目的点击事件
         blacknumber();
         // 设置号码归属地设置条目的点击事件，因为也是开启关闭服务，参考骚扰拦截
         address();
+        //设置归属地显示风格的条目点击事件
+        addressStyle();
     }
     /**
      * 设置自动更新的条目的点击事件
@@ -130,6 +135,23 @@ public class SettingActivity extends Activity {
                     startService(intent);
                 }
                 mAddress.toggle();
+            }
+        });
+    }
+
+    /**
+     * 归属地显示风格设置
+     *
+     * 2016-10-17 上午10:34:46
+     */
+    private void addressStyle() {
+        mAddressStyle.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                //显示自定义的dialog
+                MyDialog myDialog = new MyDialog(SettingActivity.this);
+                myDialog.show();
             }
         });
     }

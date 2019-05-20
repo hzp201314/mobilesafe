@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="选择归属地样式"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:background="@android:color/darker_gray"
+        android:padding="8dp"
+        />
+    <!-- divider : 设置分割线的样式 ,如果使用的是色值，必须设置分割线的高度-->
+    <ListView
+        android:id="@+id/mydialog_lv_styles"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="0.5dp"
+        ></ListView>
+
+</LinearLayout>

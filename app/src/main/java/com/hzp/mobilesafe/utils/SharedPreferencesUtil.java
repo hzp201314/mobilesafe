@@ -69,6 +69,34 @@ public class SharedPreferencesUtil {
 		}
 		return sp.getString(key, defValue);
 	}
+
+	/**
+	 * 保存int信息的操作
+	 *
+	 * 2016-10-8 下午3:49:05
+	 */
+	public static void saveInt(Context context,String key,int value){
+		//name : 保存的信息xml文件的名称
+		//mode : 操作SharedPreferences的权限
+		if (sp==null) {
+			sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
+		}
+		//保存数据
+		//key : 保存信息名称
+		//value : 保存的信息
+		sp.edit().putInt(key, value).commit();
+	}
+	/**
+	 * 获取int值操作
+	 *@return
+	 * 2016-10-8 下午3:53:26
+	 */
+	public static int getInt(Context context,String key,int defValue){
+		if (sp==null) {
+			sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
+		}
+		return sp.getInt(key, defValue);
+	}
 	
 	
 	

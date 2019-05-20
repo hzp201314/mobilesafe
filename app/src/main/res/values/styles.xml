@@ -77,4 +77,34 @@
         <item name="android:onClick">next</item>
     </style>
 
+    <!-- 自定义dialog的主题样式
+        parent : 继承，相当于样式文件中，要是Theme.Dialog的属性
+   -->
+    <style name="AddressStyle"  parent="android:Theme.Dialog">
+        <!-- 设置背景色 -->
+        <item name="android:windowBackground">@android:color/white</item>
+        <!-- 边框  @null：没有边框-->
+        <item name="android:windowFrame">@null</item>
+        <!-- 是否覆盖窗口显示内容  @null：不覆盖-->
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- 执行的动画效果  @null：不设置动画-->
+        <item name="android:windowAnimationStyle">@style/AddressStyleAnimation</item>
+
+        <!-- 是否设置阴影 -->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!-- 阴影是否半透明效果 -->
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- 去除标题栏 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 设置可以点击空白处消失 false:不可以 -->
+        <item name="android:windowCloseOnTouchOutside">true</item>
+    </style>
+
+
+    <!-- 自定义dialog的显示动画 -->
+    <style name="AddressStyleAnimation">
+        <item name="android:windowEnterAnimation">@anim/input_method_enter</item>
+        <item name="android:windowExitAnimation">@anim/input_method_exit</item>
+    </style>
+
 </resources>

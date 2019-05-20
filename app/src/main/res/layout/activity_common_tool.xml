@@ -24,6 +24,7 @@
         ></com.hzp.mobilesafe.view.SettingView>
 
     <com.hzp.mobilesafe.view.SettingView
+        android:id="@+id/commontool_sv_commonnumber"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/selector_setting_item_bottom"

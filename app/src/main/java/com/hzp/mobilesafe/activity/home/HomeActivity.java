@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hzp.mobilesafe.R;
+import com.hzp.mobilesafe.activity.home.appManager.AppManagerActivity;
 import com.hzp.mobilesafe.activity.home.blacknumber.BlackNumberActivity;
 import com.hzp.mobilesafe.activity.home.commonTool.CommonToolActivity;
 import com.hzp.mobilesafe.activity.home.mobileSecurity.LostFindActivity;
@@ -116,6 +117,11 @@ public class HomeActivity extends Activity implements OnItemClickListener {
                 //骚扰拦截
                 Intent intent = new Intent(HomeActivity.this,BlackNumberActivity.class);
                 startActivity(intent);
+                break;
+            case 2:
+                //跳转到软件管家
+                Intent intent2 = new Intent(HomeActivity.this,AppManagerActivity.class);
+                startActivity(intent2);
                 break;
             case 7:
                 //常用工具
