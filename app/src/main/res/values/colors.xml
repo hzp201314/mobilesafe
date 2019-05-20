@@ -3,4 +3,9 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <!-- resources : 将颜色封装成app的res资源 -->
+    <!-- color : 封装颜色的条目   name:封装的色值的名称 -->
+    <color name="lostfindaginbgpressedcolor">#9CFFCE</color>
+    <color name="lostfindaginbgnormalcolor">#FFFFFF</color>
 </resources>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:my="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.home.commonTool.CommonToolActivity">
+    <TextView
+        style="@style/ActivityTitleStyle"
+        android:text="常用工具"
+        />
+
+    <com.hzp.mobilesafe.view.SettingView
+        android:id="@+id/commontool_sv_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_setting_item_top"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        my:title="号码归属地查询"
+        my:istoggle="false"
+        ></com.hzp.mobilesafe.view.SettingView>
+
+    <com.hzp.mobilesafe.view.SettingView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_setting_item_bottom"
+        my:title="常用号码查询"
+        my:istoggle="false"
+        ></com.hzp.mobilesafe.view.SettingView>
+
+    <com.hzp.mobilesafe.view.SettingView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_setting_item_top"
+        android:layout_marginTop="8dp"
+        my:title="短信备份"
+        my:istoggle="false"
+        ></com.hzp.mobilesafe.view.SettingView>
+
+    <com.hzp.mobilesafe.view.SettingView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_setting_item_bottom"
+        my:title="短信还原"
+        my:istoggle="false"
+        ></com.hzp.mobilesafe.view.SettingView>
+
+    <com.hzp.mobilesafe.view.SettingView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_setting_item_top"
+        android:layout_marginTop="8dp"
+        my:title="程序锁管理"
+        my:istoggle="false"
+        ></com.hzp.mobilesafe.view.SettingView>
+
+    <com.hzp.mobilesafe.view.SettingView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_setting_item_middle"
+        my:title="开启电子狗服务1"
+        my:istoggle="true"
+        ></com.hzp.mobilesafe.view.SettingView>
+
+    <com.hzp.mobilesafe.view.SettingView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_setting_item_bottom"
+        my:title="开启电子狗服务1"
+        my:istoggle="true"
+        ></com.hzp.mobilesafe.view.SettingView>
+</LinearLayout>

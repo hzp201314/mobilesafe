@@ -4,10 +4,99 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".activity.home.HomeActivity">
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="首页"/>
+        android:background="@drawable/blue_bkg"
+        >
+        <!-- layout_centerVertical : 垂直居中 -->
+        <ImageView
+            android:id="@+id/home_iv_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/heima"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            />
+        <!-- layout_toRightOf : 在哪个控件的右边 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_toRightOf="@id/home_iv_logo"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            >
+            <!-- textStyle : 设置文本的样式
+                       normal ： 默认的样式
+                       bold ：加粗
+                       italic ： 斜体
+             -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="手机卫士"
+                android:textSize="20sp"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                />
+            <!-- singleLine : 单行显示
+                 ellipsize
+                 		none:忽略后面的文本
+                 		start:省略前面的文本
+                 		middle ： 省略中间的文本
+                 		end ：省略后面的文本，默认效果
+                 		marquee ： 滚动效果，获取焦点才有效果
+                 focusableInTouchMode : 触摸获取焦点
+                 TextView：天生没有焦点
+                 focusable : 强制抢夺焦点
+                 marqueeRepeatLimit : 设置滚动次数，marquee_forever：一直滚动
+            -->
+            <com.hzp.mobilesafe.view.HomeTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="手机卫士,http://www.itheima.com,真64核杀毒引擎，打开7次可以召唤神龙，辅助杀毒......"
+                android:textSize="14sp"
+                android:textColor="#FF0000"
+                android:textStyle="bold"
+                />
+        </LinearLayout>
+        <!--
+               背景：和控件是一体的
+               前景：只是在控件上放置一张图片显示，并不是和控件一体的，所以会被背景撑大
+               scaleType : 图片显示的类型,center:显示原图片的大小，并在imageView中心位置显示
+               clickable : 强制控件可以点击
+        -->
+        <ImageView
+            android:id="@+id/home_iv_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/setting"
+            android:layout_alignParentRight="true"
+            android:layout_margin="4dp"
+            android:background="@drawable/selector_home_setting"
+            android:scaleType="center"
+            android:clickable="true"
+            android:onClick="enterSetting"
+            ></ImageView>
+
+
+    </RelativeLayout>
+
+    <!-- 根据listview相似的操作
+        numColumns : 设置显示的列数
+        horizontalSpacing : 设置列与列之间的距离
+        verticalSpacing : 行与行之间的距离
+   -->
+    <GridView
+        android:id="@+id/home_gv_gridview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="2"
+        android:horizontalSpacing="5dp"
+        android:verticalSpacing="5dp"
+        ></GridView>
 
 </LinearLayout>

@@ -2,12 +2,38 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hzp.mobilesafe">
 
+    <!-- package : 当前应用程序的包名，应用程序在系统中的唯一标示 -->
+
+
     <!-- 联网的权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- 写SD卡的权限 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 读取电话信息的权限 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 接受手机重启的权限 -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- 发送短信的权限 -->
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <!-- 读取联系人的权限 -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!-- 接受短信的权限 -->
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <!-- 模拟位置的权限，主要是给模拟器使用，真机也可以使用 -->
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+    <!-- 精确的位置的权限，真机中必须使用 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 大概位置的权限，真机中可以使用 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 打电话的权限 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!-- 读取通话记录权限 -->
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
+    <!-- 写通话记录的权限 -->
+    <uses-permission android:name="android.permission.WRITE_CALL_LOG" />
+    <!-- 振动的权限 -->
+    <uses-permission android:name="android.permission.VIBRATE" />
 
-    <!-- package : 当前应用程序的包名，应用程序在系统中的唯一标示 -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -34,7 +60,64 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.home.HomeActivity"></activity>
+        <activity android:name=".activity.home.HomeActivity" />
+        <activity android:name=".activity.home.SettingActivity" />
+        <activity android:name=".activity.home.mobileSecurity.SetUp1Activity" />
+        <activity android:name=".activity.home.mobileSecurity.SetUp2Activity" />
+        <activity android:name=".activity.home.mobileSecurity.SetUp3Activity" />
+        <activity android:name=".activity.home.mobileSecurity.SetUp4Activity" />
+        <activity android:name=".activity.home.mobileSecurity.SetUp5Activity" />
+        <activity android:name=".activity.home.mobileSecurity.LostFindActivity" />
+
+        <receiver android:name=".receiver.BootCompleteReceiver">
+
+            <!--
+                 intent-filter : 设置广播接受者要接受的广播事件
+                    priority ： 设置广播接受者的优先级，值越大优先级越高，越先接收到广播
+                    action : 设置接受什么样的广播
+            -->
+            <intent-filter android:priority="1000">
+
+                <!-- 手机重启的广播事件 -->
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".receiver.SmsReceiver">
+            <intent-filter android:priority="1000">
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".service.GPSService" />
+        <service
+            android:name=".service.BlackNumberService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name=".service.AddressService"
+            android:enabled="true"
+            android:exported="true" />
+        <!-- 设备管理员权限 -->
+        <receiver
+            android:name=".receiver.AdminReceiver"
+            android:description="@string/sample_device_admin_description"
+            android:label="@string/sample_device_admin"
+            android:permission="android.permission.BIND_DEVICE_ADMIN">
+            <meta-data
+                android:name="android.app.device_admin"
+                android:resource="@xml/device_admin_sample" />
+
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+            </intent-filter>
+        </receiver>
+
+        <activity android:name=".activity.home.mobileSecurity.ContactActivity" />
+        <activity android:name=".activity.home.blacknumber.BlackNumberActivity" />
+        <activity android:name=".activity.home.blacknumber.BlackNumberAddActivity" />
+        <activity android:name=".activity.home.blacknumber.BlackNumberUpdateActivity" />
+        <activity android:name=".activity.home.commonTool.CommonToolActivity" />
+        <activity android:name=".activity.home.commonTool.AddressActivity"></activity>
     </application>
 
 </manifest>

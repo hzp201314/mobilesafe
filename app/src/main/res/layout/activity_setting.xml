@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:my="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.home.SettingActivity"
+    tools:ignore="ResAuto">
+
+    <!-- xmlns:android="http://schemas.android.com/apk/res/android" : 命名空间，标示布局文件中使用的属性应该从哪里获取 -->
+    <!-- style:引用样式 -->
+    <TextView
+        style="@style/ActivityTitleStyle"
+        android:text="设置中心"
+        />
+
+    <com.hzp.mobilesafe.view.SettingView
+        android:id="@+id/setting_sv_update"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_setting_item_top"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        my:title="设置自动更新"
+        my:istoggle="true"
+        ></com.hzp.mobilesafe.view.SettingView>
+
+    <com.hzp.mobilesafe.view.SettingView
+        android:id="@+id/setting_sv_blacknumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_setting_item_bottom"
+        my:title="设置骚扰拦截"
+        my:istoggle="true"
+        ></com.hzp.mobilesafe.view.SettingView>
+
+    <com.hzp.mobilesafe.view.SettingView
+        android:id="@+id/setting_sv_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_setting_item_top"
+        android:layout_marginTop="8dp"
+        my:title="归属地显示设置"
+        my:istoggle="true"
+        ></com.hzp.mobilesafe.view.SettingView>
+
+    <com.hzp.mobilesafe.view.SettingView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_setting_item_bottom"
+        my:title="归属地风格设置"
+        my:istoggle="false"
+        ></com.hzp.mobilesafe.view.SettingView>
+
+
+</LinearLayout>

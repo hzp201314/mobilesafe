@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.text.TextUtils;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,7 +17,6 @@ import com.hzp.mobilesafe.R;
 import com.hzp.mobilesafe.activity.home.HomeActivity;
 import com.hzp.mobilesafe.url.ApkVersionUrl;
 import com.hzp.mobilesafe.utils.PackageUtil;
-import com.hzp.mobilesafe.utils.TextUtil;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.ResponseInfo;
@@ -29,7 +27,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.net.URLEncoder;
 
 
 public class SplashActivity extends Activity {
@@ -102,6 +99,7 @@ public class SplashActivity extends Activity {
             @Override
             public void onFailure(HttpException e, String s) {
                 Toast.makeText(getApplicationContext(),"连接服务器失败",Toast.LENGTH_SHORT).show();
+                enterHome();
             }
         });
 
