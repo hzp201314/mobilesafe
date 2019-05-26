@@ -37,9 +37,9 @@ public class SetUp2Activity extends BaseActivity {
 
         //2.再次进入界面，回显是否绑定的操作
         String sp_sim = SharedPreferencesUtil.getString( getApplicationContext(), Constants.SIM, "" );
-        if (TextUtils.isEmpty( sp_sim )) {
+        if (TextUtils.isEmpty( sp_sim )) {//未绑定
             mIsLock.setImageResource( R.drawable.unlock );
-        } else {
+        } else {//绑定
             mIsLock.setImageResource( R.drawable.lock );
         }
 
@@ -55,7 +55,7 @@ public class SetUp2Activity extends BaseActivity {
                 //未绑定 -> 点击绑定
                 //判断是否绑定
                 String sp_sim = SharedPreferencesUtil.getString( getApplicationContext(), Constants.SIM, "" );
-                if (TextUtils.isEmpty( sp_sim )) {
+                if (TextUtils.isEmpty( sp_sim )) {//绑定
                     //未绑定 -> 点击绑定
                     //绑定SIM卡：本质保存SIM卡的序列号
                     //获取电话的管理者
@@ -79,7 +79,7 @@ public class SetUp2Activity extends BaseActivity {
                         mIsLock.setImageResource(R.drawable.lock);
                     }
 
-                }else{
+                }else{//解绑
                     //绑定 -> 点击解绑
                     SharedPreferencesUtil.saveString(getApplicationContext(), Constants.SIM, "");
                     //修改的图片

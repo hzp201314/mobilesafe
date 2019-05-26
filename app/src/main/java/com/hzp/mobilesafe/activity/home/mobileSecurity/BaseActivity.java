@@ -80,13 +80,12 @@ public abstract class BaseActivity extends Activity {
     /**
      * 上一步具体操作的抽象方法，由子类实现，子类根据自己的特性进行跳转操作实现
      * 由子类返回boolean值，true:不能执行跳转操作，false:可以执行跳转操作
-     * 2016-10-10 下午3:18:12
+     *
      */
     public abstract boolean pre_activity();
     /**
      * 下一步具体操作的抽象方法，由子类实现，子类根据自己的特性进行跳转操作实现
      *
-     * 2016-10-10 下午3:18:12
      */
     public abstract boolean next_activity();
 
@@ -94,7 +93,6 @@ public abstract class BaseActivity extends Activity {
     /**
      * 实体返回键的响应操作
      *
-     *2016-10-10  下午3:45:28
      */
     @Override
     public void onBackPressed() {
@@ -105,6 +103,10 @@ public abstract class BaseActivity extends Activity {
         super.onBackPressed();//没效果，可以删除
     }
 
+    /**
+     * 重写onCreate方法
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
