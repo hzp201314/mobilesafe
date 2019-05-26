@@ -33,7 +33,7 @@ import android.widget.Toast;
  * 描述：GPS定位服务
  */
 public class GPSService extends Service {
-    private static final String TAG ="GPSService" ;
+    private static final String TAG = "GPSService";
     private LocationManager locationManager;
     private MyLocationListener listener;
 
@@ -55,18 +55,19 @@ public class GPSService extends Service {
         //参数2：最小的定位的间隔时间
         //参数3：最小的定位的间隔距离
         //参数4：定位的回调监听
-        if (ActivityCompat.checkSelfPermission( this, Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission( this, Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED) {
+
+        if (checkSelfPermission( Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED && checkSelfPermission( Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
+            //    Activity#requestPermissions
             // here to request the missing permissions, and then overriding
             //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            Toast.makeText( this,"GPS权限未打开",Toast.LENGTH_SHORT );
-        }else {
-            locationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 0, 0, listener );
+            // for Activity#requestPermissions for more details.
+            return;
         }
+        locationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 0, 0, listener );
+
     }
 
     /**定位的回调函数**/

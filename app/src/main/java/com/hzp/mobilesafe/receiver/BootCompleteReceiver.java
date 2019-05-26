@@ -11,8 +11,11 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.hzp.mobilesafe.service.ProtectedService;
 import com.hzp.mobilesafe.utils.Constants;
 import com.hzp.mobilesafe.utils.SharedPreferencesUtil;
+
+import static android.support.v4.content.PermissionChecker.checkSelfPermission;
 
 /**
  * created by hzp on 2019/5/20 11:33
@@ -28,14 +31,16 @@ public class BootCompleteReceiver extends BroadcastReceiver {
         Toast.makeText( context, "手机重启了。。。", Toast.LENGTH_SHORT );
 
         //判断用户是否开启防盗保护，开启，执行判断操作，没有开启，不做任何操作
-        boolean sp_protected = SharedPreferencesUtil.getBoolean(context, Constants.PROTECTED, false);
-        if(sp_protected) {
+        boolean sp_protected = SharedPreferencesUtil.getBoolean( context, Constants.PROTECTED, false );
+        if (sp_protected) {
             //判断sim卡是否发生变化
             //1.获取保存的sim卡序列号
             String sp_sim = SharedPreferencesUtil.getString( context, Constants.SIM, "" );
             //2.重新获取当前手机的sim卡
             TelephonyManager tel = (TelephonyManager) context.getSystemService( Context.TELEPHONY_SERVICE );
             //tel.getLine1Number();//获取和SIM卡绑定的电话号码，在中国有时候获取不到
+
+
             if (ActivityCompat.checkSelfPermission( context, Manifest.permission.READ_PHONE_STATE ) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
                 //    ActivityCompat#requestPermissions
@@ -45,8 +50,8 @@ public class BootCompleteReceiver extends BroadcastReceiver {
                 // to handle the case where the user grants the permission. See the documentation
                 // for ActivityCompat#requestPermissions for more details.
                 return;
-            } else {
-                String sim = tel.getSimSerialNumber();//获取SIM卡的序列号，唯一标示
+            }
+            String sim = tel.getSimSerialNumber();//获取SIM卡的序列号，唯一标示
                 //3.判断sim是否为null
                 if (sp_sim != null && sim != null) {
                     if (!sp_sim.equals( sim )) {
@@ -60,8 +65,11 @@ public class BootCompleteReceiver extends BroadcastReceiver {
                         smsManager.sendTextMessage( SharedPreferencesUtil.getString(context, Constants.SAFENUMBER, "5554"), null, "da ge wo bei dao le,Help Me", null, null );
                     }
                 }
-            }
+
         }
+
+        //手机重启的时候，开启守护进程
+        context.startService(new Intent(context,ProtectedService.class));
 
     }
 }

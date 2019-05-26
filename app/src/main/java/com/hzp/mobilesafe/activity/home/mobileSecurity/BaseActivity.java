@@ -69,6 +69,10 @@ public abstract class BaseActivity extends Activity {
             return;
         }
         finish();
+        /*overridePendingTransition：设置activity之间切换动画；
+            效果必须在finish()或者startAvtivity()方法之后执行才生效*/
+        /*参数一：新的界面进入动画*/
+        /*参数二：旧的界面离开动画*/
         overridePendingTransition(R.anim.anim_setup_next_enter, R.anim.anim_setup_next_exit);
     }
 

@@ -62,16 +62,16 @@ public class SetUp2Activity extends BaseActivity {
                     TelephonyManager tel = (TelephonyManager) getSystemService( TELEPHONY_SERVICE );
                     //tel.getLine1Number();//获取和SIM卡绑定的电话号码，在中国有时候获取不到
 
-                    if (ActivityCompat.checkSelfPermission( SetUp2Activity.this, Manifest.permission.READ_PHONE_STATE ) != PackageManager.PERMISSION_GRANTED) {
+
+                    if (checkSelfPermission( Manifest.permission.READ_PHONE_STATE ) != PackageManager.PERMISSION_GRANTED) {
                         // TODO: Consider calling
-                        //    ActivityCompat#requestPermissions
+                        //    Activity#requestPermissions
                         // here to request the missing permissions, and then overriding
                         //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
                         //                                          int[] grantResults)
                         // to handle the case where the user grants the permission. See the documentation
-                        // for ActivityCompat#requestPermissions for more details.
-                        Toast.makeText( SetUp2Activity.this,"请打开读取电话权限",Toast.LENGTH_SHORT );
-                        SharedPreferencesUtil.saveString(getApplicationContext(), Constants.SIM, "");
+                        // for Activity#requestPermissions for more details.
+
                     }else {
                         String sim = tel.getSimSerialNumber();//获取SIM卡的序列号，唯一标示
                         SharedPreferencesUtil.saveString(getApplicationContext(), Constants.SIM, sim);

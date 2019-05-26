@@ -15,12 +15,13 @@ public class SharedPreferencesUtil {
 	/**
 	 * 保存boolean信息的操作
 	 *
-	 * 2016-10-8 下午3:49:05
+	 * 静态内存一直存在
 	 */
 	public static void saveBoolean(Context context,String key,boolean value){
 		//name : 保存的信息xml文件的名称
 		//mode : 操作SharedPreferences的权限
 		if (sp==null) {
+			/*创建config.xml文件*/
 			sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
 		}
 		//保存数据
@@ -31,7 +32,7 @@ public class SharedPreferencesUtil {
 	/**
 	 * 获取boolean值操作
 	 *@return
-	 * 2016-10-8 下午3:53:26
+	 *
 	 */
 	public static boolean getBoolean(Context context,String key,boolean defValue){
 		if (sp==null) {

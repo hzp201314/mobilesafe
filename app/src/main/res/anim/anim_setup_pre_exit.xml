@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--上一步离开动画 从左往右离开当前屏幕-->
 <translate
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:fromXDelta="0%"
@@ -8,6 +9,8 @@
     <!-- fromXDelta : 从哪里开始平移 
          toXDelta ： 平移到哪里
          duration :持续时间
+          0%<====当前页=====>100|？=100%<====离开页=====>
+         0=>100%
     -->
 
 </translate>

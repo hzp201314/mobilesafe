@@ -4,6 +4,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.app.Activity;
@@ -22,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hzp.mobilesafe.R;
 import com.hzp.mobilesafe.bean.AppInfo;
@@ -30,7 +34,7 @@ import com.hzp.mobilesafe.view.CustomProgressBar;
 
 import java.util.List;
 
-public class AppManagerActivity extends Activity {
+public class AppManagerActivity extends Activity implements View.OnClickListener {
     private CustomProgressBar mMemory;
     private CustomProgressBar mSD;
     private ListView mListView;
@@ -134,6 +138,14 @@ public class AppManagerActivity extends Activity {
                 //判断气泡是否显示，如果显示，取消气泡显示，重新再新的条目显示气泡
                 hidepopupwindow();
                 View contentView = View.inflate(getApplicationContext(), R.layout.popupwindow_item, null);
+
+                //初始化控件，设置点击事件
+                //如果只是设置点击操作，没有其他操作，可以不用将初始化的对象，放到引用中进行操作，可以直接设置点击事件
+                contentView.findViewById(R.id.pop_ll_uninstall).setOnClickListener(AppManagerActivity.this);
+                contentView.findViewById(R.id.pop_ll_open).setOnClickListener(AppManagerActivity.this);
+                contentView.findViewById(R.id.pop_ll_share).setOnClickListener(AppManagerActivity.this);
+                contentView.findViewById(R.id.pop_ll_info).setOnClickListener(AppManagerActivity.this);
+
                 //contentView : 气泡的样式
                 //width,height : 气泡的宽高
                 popupWindow = new PopupWindow(contentView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -238,6 +250,135 @@ public class AppManagerActivity extends Activity {
                 });
             };
         }.start();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.pop_ll_uninstall:
+                //卸载
+                uninstall();
+                break;
+            case R.id.pop_ll_open:
+                //打开
+                open();
+                break;
+            case R.id.pop_ll_share:
+                //分享
+                share();
+                break;
+            case R.id.pop_ll_info:
+                //详情信息
+                info();
+                break;
+        }
+        //点击条目，隐藏气泡
+        hidepopupwindow();
+
+    }
+    /**
+     * 卸载操作
+     *
+     * 2016-10-20 上午9:40:26
+     */
+    private void uninstall() {
+        //如何打开系统的卸载界面
+        /**
+         * <intent-filter>
+         <action android:name="android.intent.action.VIEW" />
+         <action android:name="android.intent.action.DELETE" />
+         <category android:name="android.intent.category.DEFAULT" />
+         <data android:scheme="package" /> //需要将卸载的应用程序的包名传递给系统,根据tel:
+         </intent-filter>
+         */
+        //判断如果是当前的应用程序，不能被卸载的
+        if (!appInfo.packageName.equals(getPackageName())) {
+            //判断是否是系统程序，如果是，提醒用户需要root权限
+            if (!appInfo.isSystem) {
+                Intent intent = new Intent();
+                intent.setAction("android.intent.action.DELETE");
+                intent.addCategory("android.intent.category.DEFAULT");
+                intent.setData( Uri.parse("package:"+appInfo.packageName));
+                //startActivity(intent);
+                //因为从系统的卸载界面回到我们的界面的时候，还需要刷新界面，将已经卸载的应用程序的信息给删除
+                startActivityForResult(intent, 0);
+            }else{
+                Toast.makeText(getApplicationContext(), "系统程序，想要卸载，必须获取root权限", 0).show();
+            }
+        }else{
+            Toast.makeText(getApplicationContext(), "文明社会，杜绝自杀", 0).show();
+        }
+
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //刷新界面，将已卸载的数据清除
+        //因为adapter是从两个集合中获取数据的，删除数据，不好做，可以重新加载一次数据
+        initData();
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    /**
+     * 打开应用程序
+     *
+     * 2016-10-20 上午9:56:42
+     */
+    private void open() {
+        PackageManager pm = getPackageManager();
+        //获取应用程序的启动意图
+        Intent intent = pm.getLaunchIntentForPackage(appInfo.packageName);
+        if (intent != null) {
+            startActivity(intent);
+        }
+    }
+
+    /**
+     * 分享
+     *
+     * 2016-10-20 上午10:27:53
+     */
+    private void share() {
+        /**
+         * I/ActivityManager(1007):
+         START {
+         act=android.intent.action.SEND    action
+         cat=[android.intent.category.DEFAULT]   category
+         typ=text/plain   type
+         flg=0x1
+         cmp=com.android.mms/.ui.ComposeMessageActivity (has clip) (has extras) u=0   跳转到那个界面   (has extras)：有传递数据
+         } from pid 1280
+         */
+        Intent intent = new Intent();
+        intent.setAction("android.intent.action.SEND");
+        intent.addCategory("android.intent.category.DEFAULT");
+        intent.setType("text/plain");
+        //设置传递数据
+        intent.putExtra(Intent.EXTRA_TEXT, "发现一个很牛x的软件："+appInfo.name+"，下载路径，http://www.google.com,自己去搜...");
+        startActivity(intent);
+    }
+
+    /**
+     * 跳转到详情界面
+     *
+     * 2016-10-20 上午10:35:12
+     */
+    private void info() {
+        /**
+         * I/ActivityManager(1007):
+         START {
+         act=android.settings.APPLICATION_DETAILS_SETTINGS
+         cat=[android.intent.category.DEFAULT]
+         dat=package:com.example.android.apis   data
+         cmp=com.android.settings/.applications.InstalledAppDetails u=0
+         } from pid 1280
+         */
+        Intent intent = new Intent();
+        intent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
+        intent.addCategory("android.intent.category.DEFAULT");
+        intent.setData(Uri.parse("package:"+appInfo.packageName));
+        startActivity(intent);
     }
 
     private class Myadapter extends BaseAdapter{

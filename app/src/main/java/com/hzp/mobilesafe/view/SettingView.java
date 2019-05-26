@@ -41,7 +41,7 @@ public class SettingView extends RelativeLayout {
 		
 		//将设置给自定义控件的自定义属性的值获取出来，设置给自定义控件中的textview显示
 		//因为AttributeSet中保存有控件的所有属性，可以通过AttributeSet获取自定义属性的值
-		//通过命名空间和属性的名称，将属性的值获取出来
+		//通过“命名空间”和“属性”的名称，将属性的值获取出来
 		String title = attrs.getAttributeValue(NAMESPACE, "title");
 		//将获取的属性的值设置给textview展示
 		mTitle.setText(title);
@@ -56,11 +56,12 @@ public class SettingView extends RelativeLayout {
 	/**
 	 * 将包含有textview和imageView布局文件添加到自定义控件中
 	 *
-	 * 2016-10-8 上午11:34:01
 	 */
 	private void initView() {
+		/*将布局文件填充到View对象中*/
 		View view = View.inflate(getContext(), R.layout.settingview, null);
-		this.addView(view);//将view对象添加到自定义控件中
+		/*将view对象添加到自定义控件中*/
+		this.addView(view);
 		
 		//初始化控件
 		mTitle = (TextView) view.findViewById(R.id.setting_tv_title);
@@ -70,11 +71,11 @@ public class SettingView extends RelativeLayout {
 	
 	/**
 	 * 提供给activity调用的方法，根据传递过来的开关状态，设置自定义控件中的图片的显示类型
-	 *@param isToggle ： 开关状态
-	 * 2016-10-8 下午3:16:12
+	 *@param isToggle ： 开关状态 true:开启；		false：关闭
+	 *
 	 */
 	public void setToggleOn(boolean isToggle){
-		//保存开关状态，方便返回方法使用
+		//保存开关状态，方便返回方法istoggle()使用
 		mIsToggle = isToggle;
 		if (isToggle) {
 			mIcon.setImageResource(R.drawable.on);
@@ -84,8 +85,8 @@ public class SettingView extends RelativeLayout {
 	}
 	/**
 	 * 提供给activity调用的方法，用来返回开关状态
-	 *@return
-	 * 2016-10-8 下午3:19:41
+	 *@return true:开启;		 false：关闭
+	 *
 	 */
 	public boolean istoggle(){
 		return mIsToggle;
@@ -93,7 +94,6 @@ public class SettingView extends RelativeLayout {
 	/**
 	 * 提供给activity调用的方法,开关操作
 	 *
-	 * 2016-10-8 下午3:39:27
 	 */
 	public void toggle(){
 		//第一步优化

@@ -6,7 +6,10 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -16,8 +19,11 @@ import android.widget.Toast;
 
 import com.hzp.mobilesafe.R;
 import com.hzp.mobilesafe.activity.home.HomeActivity;
+import com.hzp.mobilesafe.service.ProtectedService;
 import com.hzp.mobilesafe.url.ApkVersionUrl;
+import com.hzp.mobilesafe.utils.Constants;
 import com.hzp.mobilesafe.utils.PackageUtil;
+import com.hzp.mobilesafe.utils.SharedPreferencesUtil;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.ResponseInfo;
@@ -52,6 +58,43 @@ public class SplashActivity extends Activity {
         initActivity();
         //拷贝数据库
         copyDB("address.db");
+
+/*
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            //android8.0以上通过startForegroundService启动service
+            startForegroundService(new Intent(this,ProtectedService.class));
+        } else {
+            startService(new Intent(this,ProtectedService.class));
+        }*/
+
+
+        //开启守护进程
+//        startService(new Intent(this,ProtectedService.class));
+        createshortcut();
+    }
+    /**
+     * 创建快捷方式
+     *
+     * 2016-10-26 下午2:45:43
+     */
+    private void createshortcut() {
+        //判断快捷方式是否创建
+        boolean b = SharedPreferencesUtil.getBoolean(getApplicationContext(), Constants.SHORTCUT, false);
+        if (!b) {
+            Intent intent = new Intent();
+            intent.setAction("com.android.launcher.action.INSTALL_SHORTCUT");
+            //设置快捷方式的名称
+            intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, "手机卫士95");
+            //设置快捷方式的图标
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
+            intent.putExtra(Intent.EXTRA_SHORTCUT_ICON, bitmap);
+            //设置快捷方式的操作
+            Intent enter = new Intent(this,SplashActivity.class);
+            intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, enter);
+            sendBroadcast(intent);
+
+            SharedPreferencesUtil.saveBoolean(getApplicationContext(), Constants.SHORTCUT, true);
+        }
     }
     /**
      * 拷贝数据库的方法
@@ -117,7 +160,13 @@ public class SplashActivity extends Activity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                checkUpdate();
+                /*根据设置中心保存的开关状态，设置是否检查更新操作*/
+                boolean b = SharedPreferencesUtil.getBoolean( getApplicationContext(), Constants.ISUPDATE, true );
+                if(b) {
+                    checkUpdate();
+                }else {
+                    enterHome();
+                }
             }
         },2000);
     }
@@ -128,15 +177,18 @@ public class SplashActivity extends Activity {
     private void checkUpdate() {
 
         //1.链接服务器，获取服务器数据，判断是否有最新版本
-        //1.1.链接服务器   a.联网操作，耗时操作，子线程中 ；b.权限    c.httpURlConnection  httpclient  xutils  volly  okhttp
+        //1.1.链接服务器
+        //  a.联网操作，耗时操作，子线程中 ；
+        //  b.权限 联网的权限 <uses-permission android:name="android.permission.INTERNET" />
+        //  c.httpURlConnection  httpclient(android6.0以后禁止使用)  xutils  volly  okhttp
         //connTimeout : 链接超时时间
         HttpUtils httpUtils=new HttpUtils(2000);
         //链接请求服务器
-        //method : 请求方式
-        //url ： 请求路径
-        //params : 请求参数   http://baidu.com/?name=ls&psw=123456
-        //RequestCallBack : 请求的回调监听
-        //ctrl+shift+x ：小转大  ctrl+shift+y ：大转小  
+        //  method : 请求方式
+        //  url ： 请求路径
+        //  params : 请求参数   http://baidu.com/?name=ls&psw=123456
+        //  RequestCallBack : 请求的回调监听
+        //  ctrl+shift+u ：小转大 ,大转小,互转。
         httpUtils.send(HttpMethod.GET, ApkVersionUrl.CHECK_VERSION_URL, null, new RequestCallBack<String>() {
             //请求成功调用的方法
             //responseInfo : 保存服务器返回的数据
@@ -160,9 +212,13 @@ public class SplashActivity extends Activity {
 
     }
 
+    /**
+     * 解析json数据
+     * @param json
+     */
     private void processJson(String json) {
-        //将json封装成JSONObject对象
         try {
+            //将json封装成JSONObject对象
             JSONObject jsonObject = new JSONObject(json);
             String status =jsonObject.isNull("status")?"":jsonObject.getString("status");
             String msg =jsonObject.isNull("msg")?"":jsonObject.getString("msg");
@@ -173,6 +229,7 @@ public class SplashActivity extends Activity {
                 version = jsonBackMsg.isNull("version") ? "" : jsonBackMsg.getString("version");
                 apkurl = jsonBackMsg.isNull("apkurl") ? "" : jsonBackMsg.getString("apkurl");
                 message = jsonBackMsg.isNull("message") ? "" : jsonBackMsg.getString("message");
+                Log.d( TAG, "processJson: 返回版本信息:code="+code+",version="+version+",apkurl="+apkurl+",message="+message );
                 //1.3.判断是否有最新版本
                 //判断最新版本的apk的版本号是否和当前应用程序的版本号一致，如果一致，没有最新版本，如果不一致，有最新版本
                 if(code>PackageUtil.getVersionCode(this)){
@@ -195,7 +252,7 @@ public class SplashActivity extends Activity {
     }
 
     /**
-     * 更新版本对话框
+     * 更新版本对话框dialog
      */
     private void showUpdateDialog() {
         AlertDialog.Builder builder=new AlertDialog.Builder(this);
@@ -207,7 +264,7 @@ public class SplashActivity extends Activity {
         //设置描述信息
         builder.setMessage(message);
 
-        //监听对话框消失的操作
+        //监听对话框消失的操作,点击空白处对话框会消失
         builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
@@ -249,12 +306,17 @@ public class SplashActivity extends Activity {
      *  3.下载最新版本apk
      */
     private void downloadAPK() {
+        //判断SD卡是否可用，即SD卡是否挂载
         if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
             //3.2.显示下载的进度条的对话框
             showProgressDialog();
             //3.1.链接服务器，下载最新版本
             HttpUtils httpUtils=new HttpUtils();
-            //问题：1.下载路径；2.写SD卡权限；3.判断SD卡是否挂载；4.生成一个2.0版本apk
+            //问题：
+            // 1.下载路径；SAVE_URL="mnt/sdcard/mobilesafe.apk"
+            // 2.写SD卡权限；<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+            // 3.判断SD卡是否挂载；
+            // 4.生成一个2.0版本apk
             //url : 下载路径
             //target : 保存的路径
             //callback : 回调监听
@@ -295,15 +357,18 @@ public class SplashActivity extends Activity {
      */
     private void installApk() {
         /**
+         * 一个应用打开另一个应用的activity采用隐式意图，需要满足activity的过滤条件
          * <intent-filter>
          <action android:name="android.intent.action.VIEW" />
          <category android:name="android.intent.category.DEFAULT" />
-         <data android:scheme="content" />  content://
+         <data android:scheme="content" />  content://通过内容提供者获取
          <data android:scheme="file" />  file:从文件中获取安装应用的程序
          <data android:mimeType="application/vnd.android.package-archive" />
          </intent-filter>
          */
         Intent intent = new Intent();
+        /*设置安装成功后，弹出系统打开界面*/
+        intent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK );
         intent.setAction("android.intent.action.VIEW");
         intent.addCategory("android.intent.category.DEFAULT");
         //相互覆盖
@@ -312,9 +377,9 @@ public class SplashActivity extends Activity {
         intent.setDataAndType(Uri.fromFile(new File(ApkVersionUrl.SAVE_URL)), "application/vnd.android.package-archive");
         //startActivity(intent);
         //当跳转到的activity退出的时候，会调用当前activity的onActivityResult方法
-        //requestCode :请求码
-        startActivity(intent);
-//        startActivityForResult(intent, 0);
+        //requestCode :请求码，用于区别是哪个应用跳转过去的
+//        startActivity(intent);
+        startActivityForResult(intent, 0);
 
     }
 
@@ -341,7 +406,7 @@ public class SplashActivity extends Activity {
     private void enterHome() {
         Intent intent = new Intent(this,HomeActivity.class);
         startActivity(intent);
-        //移除当前页面
+        //移除当前页面，防止返回键回到splash启动页
         finish();
     }
 

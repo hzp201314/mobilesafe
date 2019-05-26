@@ -4,7 +4,6 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -22,11 +21,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hzp.mobilesafe.R;
+import com.hzp.mobilesafe.activity.home.antiVirus.AntiVirusActivity;
 import com.hzp.mobilesafe.activity.home.appManager.AppManagerActivity;
 import com.hzp.mobilesafe.activity.home.blacknumber.BlackNumberActivity;
 import com.hzp.mobilesafe.activity.home.commonTool.CommonToolActivity;
 import com.hzp.mobilesafe.activity.home.mobileSecurity.LostFindActivity;
 import com.hzp.mobilesafe.activity.home.mobileSecurity.SetUp1Activity;
+import com.hzp.mobilesafe.activity.home.processManager.ProcessManagerActivity;
+import com.hzp.mobilesafe.activity.home.clearCache.ClearCacheActivity;
+import com.hzp.mobilesafe.activity.home.traffic.TrafficActivity;
 import com.hzp.mobilesafe.utils.Constants;
 import com.hzp.mobilesafe.utils.MD5Util;
 import com.hzp.mobilesafe.utils.SharedPreferencesUtil;
@@ -83,20 +86,16 @@ public class HomeActivity extends Activity implements OnItemClickListener {
     /**
      * gridview的条目点击事件
      *
-     * @param parent
-     * @param view
-     *            被点击条目的view对象
-     * @param position
-     *            被点击的条目的索引（位置）
-     * @param id
-     *            被点击的条目的id 2016-10-8 下午4:12:38
+     * @param parent adapter
+     * @param view 被点击条目的view对象
+     * @param position 被点击的条目的索引（位置）
+     * @param id 被点击的条目的id
      */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
         switch (position) {
-            case 0:
-                // 手机防盗
+            case 0:// 手机防盗
                 // 弹出设置密码对话框
                 // showSetPassWordDialog();
                 // 判断是弹出设置密码对话框还是验证密码对话框
@@ -105,10 +104,12 @@ public class HomeActivity extends Activity implements OnItemClickListener {
                 String sp_psw = SharedPreferencesUtil.getString(
                         getApplicationContext(), Constants.SJFDPSW, "");
                 if (TextUtils.isEmpty(sp_psw)) {
+                    /*弹出设置密码对话框*/
                     showSetPassWordDialog();
                 } else {
                     // Toast.makeText(getApplicationContext(), "弹出验证密码对话框",
                     // 0).show();
+                    /*弹出验证密码对话框*/
                     showEnterPassWordDialog();
                 }
 
@@ -122,6 +123,28 @@ public class HomeActivity extends Activity implements OnItemClickListener {
                 //跳转到软件管家
                 Intent intent2 = new Intent(HomeActivity.this,AppManagerActivity.class);
                 startActivity(intent2);
+                break;
+            case 3:
+                //进程管理
+                Intent intent3 = new Intent(HomeActivity.this,ProcessManagerActivity.class);
+                startActivity(intent3);
+                break;
+            case 4:
+                //流量统计
+                Intent intent4 = new Intent(HomeActivity.this,TrafficActivity.class);
+                startActivity(intent4);
+                break;
+            case 5:
+                //病毒查杀
+                Intent intent5 = new Intent(HomeActivity.this,AntiVirusActivity.class);
+                startActivity(intent5);
+                break;
+
+
+            case 6:
+                //缓存清理
+                Intent intent6 = new Intent(HomeActivity.this,ClearCacheActivity.class);
+                startActivity(intent6);
                 break;
             case 7:
                 //常用工具
@@ -205,12 +228,10 @@ public class HomeActivity extends Activity implements OnItemClickListener {
     /**
      * 弹出设置密码对话框
      *
-     * 2016-10-8 下午4:15:34
      */
     private void showSetPassWordDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View view = View.inflate(getApplicationContext(),
-                R.layout.home_setpassword_dialog, null);
+        View view = View.inflate(getApplicationContext(), R.layout.home_setpassword_dialog, null);
 
         // 初始化控件
         final EditText mPsw = (EditText) view.findViewById(R.id.dialog_et_psw);
@@ -272,6 +293,7 @@ public class HomeActivity extends Activity implements OnItemClickListener {
         // 设置条目的样式
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            /*将布局文件转换成View对象*/
             View view = View.inflate(getApplicationContext(),
                     R.layout.home_gridview_item, null);
 
@@ -307,8 +329,7 @@ public class HomeActivity extends Activity implements OnItemClickListener {
     /**
      * 设置按钮的点击事件
      *
-     * @param view
-     *            ： 被点击控件的view对象 2016-10-8 上午11:10:18
+     * @param view ： 被点击控件的view对象
      */
     public void enterSetting(View view) {
         // 跳转到设置中心界面
@@ -318,7 +339,7 @@ public class HomeActivity extends Activity implements OnItemClickListener {
 
 
     /**
-     * logo旋转动画
+     * logo旋转动画，属性动画
      *
      * 2016-10-8 上午9:21:41
      */

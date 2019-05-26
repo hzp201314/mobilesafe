@@ -8,7 +8,8 @@
     tools:context=".activity.home.SettingActivity"
     tools:ignore="ResAuto">
 
-    <!-- xmlns:android="http://schemas.android.com/apk/res/android" : 命名空间，标示布局文件中使用的属性应该从哪里获取 -->
+    <!-- xmlns:android="http://schemas.android.com/apk/res/android"
+            : 命名空间，标示布局文件中使用的属性应该从哪里获取 -->
     <!-- style:引用样式 -->
     <TextView
         style="@style/ActivityTitleStyle"
@@ -31,6 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/selector_setting_item_bottom"
+        android:clickable="true"
         my:title="设置骚扰拦截"
         my:istoggle="true"
         ></com.hzp.mobilesafe.view.SettingView>
@@ -41,6 +43,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/selector_setting_item_top"
         android:layout_marginTop="8dp"
+        android:clickable="true"
         my:title="归属地显示设置"
         my:istoggle="true"
         ></com.hzp.mobilesafe.view.SettingView>
@@ -50,6 +53,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/selector_setting_item_bottom"
+        android:clickable="true"
         my:title="归属地风格设置"
         my:istoggle="false"
         ></com.hzp.mobilesafe.view.SettingView>

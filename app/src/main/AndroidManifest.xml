@@ -38,8 +38,26 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <!-- 外拨电话的权限 -->
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
-
+    <!-- 清理进程的权限 -->
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <!-- 读短信的权限 -->
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <!-- 写短信的权限 -->
+    <uses-permission android:name="android.permission.WRITE_SMS" />
+    <!-- 获取任务栈信息 -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <!-- 获取应用程序的缓存等信息的权限 -->
+    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" />
+    <!-- 清理app缓存的权限 -->
+    <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />
+    <!-- 创建快捷方式的权限 -->
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT"/>
+    <!-- 2G 3G 4G联网的权限 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- wifi联网的权限 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <application
+        android:name="com.hzp.mobilesafe.activity.home.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -98,10 +116,37 @@
             android:name=".service.BlackNumberService"
             android:enabled="true"
             android:exported="true" />
+
+        <!-- process : 设置 AddressService运行进程的名称 -->
         <service
             android:name=".service.AddressService"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="true"
+            android:process="com.hzp.mobilesafe.addressservice" />
+
+        <!-- 锁屏清理进程 -->
+        <service android:name=".service.ScreenOffService" />
+        <!-- 桌面小控件的更新服务 -->
+        <service android:name="service.WidgetService" />
+        <service android:name=".service.ProtectedService" />
+        <service android:name=".service.AppLockService1" />
+
+        <!--
+                                       辅助功能的服务
+             permission : 给服务设置单独使用的权限，其他组件是不能使用这个权限
+        -->
+        <service
+            android:name=".service.AppLockService2"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_config" />
+        </service>
+
         <!-- 设备管理员权限 -->
         <receiver
             android:name=".receiver.AdminReceiver"
@@ -117,6 +162,22 @@
             </intent-filter>
         </receiver>
 
+        <!-- 桌面小控件 -->
+        <receiver android:name=".receiver.WidgetReceiver">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/example_appwidget_info" />
+        </receiver>
+        <receiver android:name=".receiver.KillProcessReceiver">
+            <intent-filter>
+                <action android:name="com.hzp.mobilesafe.CLEAR_PROCESS" />
+            </intent-filter>
+        </receiver>
+
         <activity android:name=".activity.home.mobileSecurity.ContactActivity" />
         <activity android:name=".activity.home.blacknumber.BlackNumberActivity" />
         <activity android:name=".activity.home.blacknumber.BlackNumberAddActivity" />
@@ -124,7 +185,27 @@
         <activity android:name=".activity.home.commonTool.CommonToolActivity" />
         <activity android:name=".activity.home.commonTool.AddressActivity" />
         <activity android:name=".activity.home.commonTool.CommonNumberActivity" />
-        <activity android:name=".activity.home.appManager.AppManagerActivity"></activity>
+        <activity android:name=".activity.home.appManager.AppManagerActivity" />
+        <activity android:name=".activity.home.processManager.ProcessManagerActivity" />
+        <activity android:name=".activity.home.commonTool.AppLockActivity" />
+        <activity
+            android:name=".activity.home.commonTool.AppUnLockActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance">
+
+            <!--
+         launchMode : 启动模式
+               standard ： 标准的启动默认
+               singleTop ： 如何activity在栈顶，直接使用
+               singleTask ： 如果activity在任务栈中，把之上的activity删除，将当前的activity置顶
+               singleInstance : 给activity设置单独的任务栈
+                excludeFromRecents : 是否从最新列表中移除activity所在的应用，true:移除，false:不移除,只要设置该属性的activity执行了，属性才会生效
+            -->
+        </activity>
+        <activity android:name=".activity.home.traffic.TrafficActivity" />
+        <activity android:name=".activity.home.clearCache.ClearCacheActivity" />
+        <activity android:name=".activity.home.antiVirus.AntiVirusActivity"></activity>
+
     </application>
 
 </manifest>

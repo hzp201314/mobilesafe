@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--创建自定义属性name-->
     <declare-styleable name="SettingView">
         <!-- 自定义控件的文本 -->
         <attr name="title" format="string" /><!-- name：属性的名称，尽量不要和系统的重复 format：属性的值的类型 -->

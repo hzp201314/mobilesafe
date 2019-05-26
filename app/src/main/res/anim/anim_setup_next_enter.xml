@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--下一步新页面进入动画 从右往左进入当前屏幕-->
 <translate
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:fromXDelta="100%"
     android:toXDelta="0%"
     android:duration="500"
     >
-    <!-- fromXDelta : 从哪里开始平移 
+    <!-- fromXDelta : 从哪里开始平移（X轴）
          toXDelta ： 平移到哪里
          duration :持续时间
+         0<====当前页=====>100%|?=100%<====下一页=====>
+         100%=>0
     -->
 
 </translate>
+<!--alpha:渐变透明-->
+<!--rotate:旋转-->
+<!--scale:缩放-->
+<!--translate:平移-->
+<!--set:组合动画，可将上面四种动画组合在一起-->

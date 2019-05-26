@@ -14,4 +14,17 @@
     <string name="sample_device_admin">手机卫士</string>
     <string name="sample_device_admin_description">手机卫士，非常好用</string>
     <string name="title_activity_black_number">BlackNumberActivity</string>
+    <string name="title_activity_black_number_add">BlackNumberAddActivity</string>
+    <string name="title_activity_black_number_update">BlackNumberUpdateActivity</string>
+    <string name="title_activity_common_tool">CommonToolActivity</string>
+    <string name="title_activity_address">AddressActivity</string>
+    <string name="title_activity_common_number">CommonNumberActivity</string>
+    <string name="title_activity_app_manager">AppManagerActivity</string>
+    <string name="title_activity_process_manager">ProcessManagerActivity</string>
+    <string name="title_activity_app_lock">AppLockActivity</string>
+    <string name="title_activity_app_un_lock">AppUnLockActivity</string>
+    <string name="accessibility_service_label">手机卫士</string>
+    <string name="accessibility_service_description">手机卫士程序锁时刻保护您的应用的安全</string>
+    <string name="title_activity_traffic">TrafficActivity</string>
+    <string name="title_activity_clear_cache">ClearCacheActivity</string>
 </resources>

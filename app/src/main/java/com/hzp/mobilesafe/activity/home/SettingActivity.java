@@ -56,8 +56,9 @@ public class SettingActivity extends Activity {
      */
     private void update() {
 
-        //再次进入界面的时候，获取保存的开关状态，根据保存的开关状态，设置界面开关操作
+        /*再次进入界面的时候，获取保存的开关状态，*/
         boolean b = SharedPreferencesUtil.getBoolean( getApplicationContext(), Constants.ISUPDATE, true );
+        /*根据保存的开关状态，设置界面开关操作*/
         mUpdate.setToggleOn( b );
 
         mUpdate.setOnClickListener( new OnClickListener() {
@@ -74,6 +75,7 @@ public class SettingActivity extends Activity {
 				}else{
 					mUpdate.setToggleOn(true);
 				}*/
+				/*改变开关状态*/
                 mUpdate.toggle();
                 //开启关闭成功，保存开关状态
                 SharedPreferencesUtil.saveBoolean( getApplicationContext(), Constants.ISUPDATE, mUpdate.istoggle() );
@@ -101,7 +103,7 @@ public class SettingActivity extends Activity {
                 Intent intent = new Intent(SettingActivity.this,
                         BlackNumberService.class);
                 if (ServiceUtil.isServiceRunning(SettingActivity.this,
-                        "com.hzp.mobliesafe.service.BlackNumberService")) {
+                        "com.hzp.mobilesafe.service.BlackNumberService")) {
                     // 开启 -> 点击关闭服务
                     stopService(intent);
                 } else {
@@ -127,7 +129,7 @@ public class SettingActivity extends Activity {
                 Intent intent = new Intent(SettingActivity.this,
                         AddressService.class);
                 if (ServiceUtil.isServiceRunning(SettingActivity.this,
-                        "com.hzp.mobliesafe.service.AddressService")) {
+                        "com.hzp.mobilesafe.service.AddressService")) {
                     // 开启 -> 点击关闭服务
                     stopService(intent);
                 } else {
@@ -161,11 +163,11 @@ public class SettingActivity extends Activity {
         super.onStart();
         // 2.再次进入的时候，判断服务是否开启，设置开关状态
         boolean b = ServiceUtil.isServiceRunning(this,
-                "com.hzp.mobliesafe.service.BlackNumberService");
+                "com.hzp.mobilesafe.service.BlackNumberService");
         mBlackNumber.setToggleOn(b);
         //回显号码归属地操作
         boolean isAddress = ServiceUtil.isServiceRunning(this,
-                "com.hzp.mobliesafe.service.AddressService");
+                "com.hzp.mobilesafe.service.AddressService");
         mAddress.setToggleOn(isAddress);
     }
 
