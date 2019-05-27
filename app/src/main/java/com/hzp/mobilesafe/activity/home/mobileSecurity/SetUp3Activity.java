@@ -63,7 +63,6 @@ public class SetUp3Activity extends BaseActivity {
      */
     public void selectContacts(View view) {
         Intent intent = new Intent(this,ContactActivity.class);
-        //startActivity(intent);
         startActivityForResult(intent, 0);
     }
     @Override

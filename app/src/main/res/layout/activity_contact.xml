@@ -10,6 +10,7 @@
         style="@style/ActivityTitleStyle"
         android:text="选择联系人"
         />
+    <!--帧布局具有覆盖效果，当listview数据未加载完成时，使用进度条实现加载数据效果-->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

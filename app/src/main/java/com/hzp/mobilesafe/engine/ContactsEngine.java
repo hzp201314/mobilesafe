@@ -31,7 +31,7 @@ public class ContactsEngine {
      */
     public static List<ContactInfo> getContactsInfo(Context context){
 
-        SystemClock.sleep(3000);
+//        SystemClock.sleep(3000);
 
 
         List<ContactInfo> list = new ArrayList<ContactInfo>();
@@ -72,6 +72,7 @@ public class ContactsEngine {
      * 2016-10-11 上午9:52:09
      */
     public static Bitmap getContactPhoto(Context context, int id){
+        //获取内容解析者
         ContentResolver contentResolver = context.getContentResolver();
         //Uri uri = ContactsContract.Contacts.CONTENT_URI;
         //拼接路径

@@ -65,12 +65,13 @@ public class ContactActivity extends Activity {
      */
     private void intData() {
         //查询数据库是耗时操作，所以要放到子线程操作
-        //在加载数据之前，显示进度条
+        //在加载数据完成之前，显示进度条
         mLoading.setVisibility( View.VISIBLE );
         new Thread(  ){
             public void run(){
                 contactsInfos= ContactsEngine.getContactsInfo(ContactActivity.this);
 
+                /*当数据查询完成在主线程UI线程更新数据，否则会报空指针异常*/
                 runOnUiThread( new Runnable() {
                     @Override
                     public void run() {
@@ -123,6 +124,7 @@ public class ContactActivity extends Activity {
 
             }
             //获取数据展示数据
+//            ContactInfo contactInfo=contactsInfos.get( position );
             ContactInfo contactInfo = (ContactInfo) getItem(position);
             //5.使用盒子中保存的findviewbyid好的控件操作
             viewHolder.mName.setText(contactInfo.name);
@@ -141,7 +143,7 @@ public class ContactActivity extends Activity {
 
 
     }
-    //1.创建盒子
+    //1.创建盒子--内部类，static静态防止内存溢出
     static class ViewHolder {
         ImageView mIcon;
         TextView mName;
