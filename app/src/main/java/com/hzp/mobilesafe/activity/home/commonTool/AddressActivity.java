@@ -71,7 +71,7 @@ public class AddressActivity extends Activity {
      * 查询按钮的点击事件
      *
      * @param view
-     *            2016-10-16 下午3:16:12
+     *
      */
     public void address(View view) {
         String number = mNumber.getText().toString().trim();
@@ -84,11 +84,11 @@ public class AddressActivity extends Activity {
         } else {
             Toast.makeText( getApplicationContext(), "请输入要查询的号码", 0 ).show();
 
-            // loadAnimation : 加载动画
+            // loadAnimation : 加载动画 抖动效果
             Animation shake = AnimationUtils.loadAnimation( this, R.anim.shake );
             mNumber.startAnimation( shake );
 
-            //振动
+            //振动 需要权限
             //振动的管理者
             Vibrator vibrator = (Vibrator) getSystemService( VIBRATOR_SERVICE );
             vibrator.vibrate( 100 );//振动，milliseconds：振动的时间，单位毫秒值

@@ -29,6 +29,9 @@ import com.hzp.mobilesafe.R;
 import com.hzp.mobilesafe.bean.BlackNumberInfo;
 import com.hzp.mobilesafe.db.dao.BlackNumberDao;
 
+/**
+ * 骚扰拦截
+ */
 public class BlackNumberActivity extends Activity {
     /**添加请求码**/
     private static final int REQUESTADDCODE = 100;
@@ -90,7 +93,7 @@ public class BlackNumberActivity extends Activity {
                 if (scrollState == OnScrollListener.SCROLL_STATE_IDLE) {
                     //判断当前界面的最后一条数据是listview的最后一条数据
                     int lastVisiblePosition = mListView.getLastVisiblePosition();//获取当前界面显示的最后一条数据，返回的时候条目的索引
-                    if (lastVisiblePosition == list.size()-1) {
+                    if (lastVisiblePosition == list.size()-1) {//判断当前屏幕最后一条数据是不是list中最后一条
                         //重新设置起始位置
                         startIndex+=MAXNUM;
                         //加载下一波数据

@@ -3,7 +3,7 @@ package com.hzp.mobilesafe.bean;
 /**
  * created by hzp on 2019/5/25 09:35
  * 作者：codehan
- * 描述：
+ * 描述：短信实体bean类
  */
 public class SMSInfo {
     public String address;

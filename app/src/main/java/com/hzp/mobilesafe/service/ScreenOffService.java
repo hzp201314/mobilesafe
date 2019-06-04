@@ -12,7 +12,7 @@ import com.hzp.mobilesafe.engine.ProcessEngine;
 /**
  * created by hzp on 2019/5/25 08:27
  * 作者：codehan
- * 描述：
+ * 描述：锁屏清理进程服务
  */
 public class ScreenOffService extends Service {
     private ScreenOffReceiver screenOffReceiver;
@@ -23,6 +23,7 @@ public class ScreenOffService extends Service {
         return null;
     }
 
+    /*锁屏广播接受者*/
     private class ScreenOffReceiver extends BroadcastReceiver {
 
         @Override

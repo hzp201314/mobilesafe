@@ -35,7 +35,7 @@ public class BlackNumberAddActivity extends Activity {
     /**
      * 保存黑名单号码的操作
      *@param view
-     * 2016-10-14 上午11:40:50
+     *
      */
     public void save(View view){
         //1.获取输入的号码，判断是否为空
@@ -96,7 +96,7 @@ public class BlackNumberAddActivity extends Activity {
     /**
      * 取消按钮的操作
      *@param view
-     * 2016-10-14 上午11:41:03
+     *
      */
     public void cancel(View view){
         //移除activity操作

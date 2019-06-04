@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * created by hzp on 2019/5/25 09:41
  * 作者：codehan
- * 描述：
+ * 描述：创建程序锁数据库
  */
 public class AppLockOpenHelper extends SQLiteOpenHelper {
 

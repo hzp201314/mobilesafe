@@ -19,11 +19,16 @@ import com.hzp.mobilesafe.R;
 import com.hzp.mobilesafe.utils.Constants;
 import com.hzp.mobilesafe.utils.SharedPreferencesUtil;
 
+/**
+ * 自定义dialog
+ */
 public class MyDialog extends Dialog {
 
     private ListView mListView;
 
     public MyDialog(Context context) {
+        // 系统中一个参数的构造函数调用二个参数的构造函数，两个参数的构造函数调用三个参数的构造函数
+        //参数1：上下文，参数2：样式主题，参数3：boolbean 是否使用自己的样式，默认设置系统样式
         super(context, R.style.AddressStyle);
     }
 
@@ -48,6 +53,7 @@ public class MyDialog extends Dialog {
             }
         });
 
+        //问题:
         //1.样式问题;2.dialog显示在底部
         //2.显示在底部，在窗口的底部显示的
         //window : 窗口，是由windowManager负责管理

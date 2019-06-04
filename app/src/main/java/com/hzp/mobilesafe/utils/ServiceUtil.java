@@ -16,7 +16,6 @@ public class ServiceUtil {
     /**
      * 动态获取服务是否开启的操作
      *@param className ： 服务的全类名
-     * 2016-10-16 上午9:37:35
      */
     public static boolean isServiceRunning(Context context, String className){
         //1.进程的管理者（活动的管理者）

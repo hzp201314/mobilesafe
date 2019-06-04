@@ -13,7 +13,7 @@ import com.hzp.mobilesafe.activity.start.SplashActivity;
 /**
  * created by hzp on 2019/5/25 09:26
  * 作者：codehan
- * 描述：
+ * 描述：前台守护进程服务
  */
 public class ProtectedService extends Service {
 
@@ -33,7 +33,7 @@ public class ProtectedService extends Service {
 
         //设置通知到来的显示的样式
         notification.icon = R.drawable.ic_default;
-        notification.tickerText = "黑马95期提醒您...";
+        notification.tickerText = "手机安全卫士提醒您...";
 
 
         //点击通知消息，打开应用程序

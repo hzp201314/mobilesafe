@@ -9,14 +9,14 @@ import java.io.File;
 /**
  * created by hzp on 2019/5/25 16:35
  * 作者：codehan
- * 描述：
+ * 描述：病毒数据库操作
  */
 public class AntivirusDao {
     /**
      * 查询应用程序是否是病毒
      * md5 : 应用程序特征码的md5值
-     *@return
-     * 2016-10-26 上午9:46:23
+     *@return true 病毒 ；  false:不是病毒
+     *
      */
     public static boolean isAntivirus(Context context, String md5){
         boolean isAntiVirus=false;

@@ -35,7 +35,6 @@ public class BlackNumberService extends Service {
     /**
      * 短信广播接受者
      *
-     *2016-10-16  上午10:14:19
      */
     private class SmsReceiver extends BroadcastReceiver {
 
@@ -98,7 +97,7 @@ public class BlackNumberService extends Service {
         @Override
         public void onCallStateChanged(int state, String incomingNumber) {
             switch (state) {
-                case TelephonyManager.CALL_STATE_IDLE://空闲的状态，挂断的状态
+                case TelephonyManager.CALL_STATE_IDLE://空闲的状态，挂断的状态,没有电话的状态
 
                     break;
                 case TelephonyManager.CALL_STATE_RINGING://响铃状态
@@ -124,7 +123,6 @@ public class BlackNumberService extends Service {
     /**
      * 挂断电话
      *
-     * 2016-10-16 上午10:37:23
      */
     public void endCall() {
         //1.5版本
@@ -144,7 +142,7 @@ public class BlackNumberService extends Service {
             //4.将方法的返回结果设置给相应的方法，使用
             //ITelephony.Stub.asInterface(ServiceManager.getService(Context.TELEPHONY_SERVICE));
             ITelephony iTelephony = ITelephony.Stub.asInterface(iBinder);
-            //5.挂断电话了
+            //5.挂断电话了(权限）
             iTelephony.endCall();
         }catch (Exception e) {
             // TODO Auto-generated catch block
@@ -154,12 +152,13 @@ public class BlackNumberService extends Service {
     /**
      * 删除通话记录的
      *
-     * 2016-10-16 上午11:18:36
      */
     public void deleteCallLog(final String blacknumber) {
         //contacts2.db数据库的calls表中数据
+        /*获取内容解析者*/
         final ContentResolver contentResolver = getContentResolver();
-        //需要查看Contacts的内容提供的源码,在清单文件中找到CallLogProvider，其中有authorities属性表示主机地址,再去查看CallLogPrivoder.java的源码通过UriMatcher找到分配的分地址
+        //需要查看Contacts的内容提供的源码,在清单文件中找到CallLogProvider，
+        // 其中有authorities属性表示主机地址,再去查看CallLogPrivoder.java的源码通过UriMatcher找到分配的分地址
         //http://www.baidu.com/jdk
         final Uri uri = Uri.parse("content://call_log/calls");
         //发现始终都有保留有一个条通话记录，原因：因为通话记录是保存在数据库中的，写数据库的操作是耗时操作，需要时间的，当删除表中的数据的时候，系统还没有把最新的通话添加到表中，所以我们删除的都是老的
@@ -174,7 +173,7 @@ public class BlackNumberService extends Service {
             //当内容提供者数据发生变化调用的方法
             @Override
             public void onChange(boolean selfChange) {
-                //删除通话记录
+                //删除通话记录 (添加权限)
                 contentResolver.delete(uri, "number=?", new String[]{blacknumber});
                 //删除成功，内容观察者就没有了，所以要注销内容观察者
                 contentResolver.unregisterContentObserver(this);

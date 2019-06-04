@@ -1,9 +1,11 @@
 package com.hzp.mobilesafe.db.dao;
 
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 
 import com.hzp.mobilesafe.db.AppLockConstants;
 import com.hzp.mobilesafe.db.AppLockOpenHelper;
@@ -14,23 +16,24 @@ import java.util.List;
 /**
  * created by hzp on 2019/5/25 09:40
  * 作者：codehan
- * 描述：
+ * 描述：程序锁数据库操作
  */
 public class AppLockDao {
     //清华同方面试题：同时操作数据库如何解决：Dao操作同步锁+OpenHelper单例模式（可选）
 
     private AppLockOpenHelper appLockOpenHelper;
+    private Context mContext;
 
     public AppLockDao(Context context) {
         appLockOpenHelper = new AppLockOpenHelper(context);
+        this.mContext=context;
     }
 
     /**
      * 添加数据的操作
      *
-     * @param packageName
-     *            ： 包名
-     * 2016-10-14 上午9:32:23
+     * @param packageName： 包名
+     *
      */
     public boolean add(String packageName) {
         //参数：保证一个
@@ -46,6 +49,12 @@ public class AppLockDao {
         long insert = database.insert(AppLockConstants.TABLE_NAME, null,
                 values);
 
+        //当数据添加成功的时候，发送一个数据更新的消息，告诉内容观察者，这样内容观察者就可以观察到数据的变化，实现更新数据库的操作
+        ContentResolver contentResolver=mContext.getContentResolver();
+        Uri uri=Uri.parse( "content://con.hzp.mobilesafe.UPDATESQLITE" );
+        //uri:uri地址
+        //observer：通知哪个内容观察者 ，如果是null，表示通知所有通过uri地址注册内容观察者
+        contentResolver.notifyChange( uri, null );//通知内容观察者数据发生变化了
         // 判断是否添加成功的操作
         return insert != -1;
         //}
@@ -55,7 +64,7 @@ public class AppLockDao {
      * 程序锁解锁操作
      *
      * @param packageName
-     *            2016-10-14 上午9:41:32
+     *
      */
     public boolean delete(String packageName) {
         SQLiteDatabase database = appLockOpenHelper.getWritableDatabase();
@@ -65,7 +74,12 @@ public class AppLockDao {
                 AppLockConstants.PACKAGENAME + "=?",
                 new String[] { packageName });
 
-        System.out.println(delete);
+        //当数据删除成功的时候，发送一个数据更新的消息，告诉内容观察者，这样内容观察者就可以观察到数据的变化，实现更新数据库的操作
+        ContentResolver contentResolver=mContext.getContentResolver();
+        Uri uri=Uri.parse( "content://con.hzp.mobilesafe.UPDATESQLITE" );
+        //uri:uri地址
+        //observer：通知哪个内容观察者 ，如果是null，表示通知所有通过uri地址注册内容观察者
+        contentResolver.notifyChange( uri, null );//通知内容观察者数据发生变化了
 
         return delete != 0;
     }
@@ -105,7 +119,6 @@ public class AppLockDao {
     /**
      * 查询全部数据的操作
      *
-     * 2016-10-14 上午10:21:12
      */
     public List<String> queryAll() {
 

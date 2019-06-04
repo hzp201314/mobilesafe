@@ -19,14 +19,12 @@ import com.hzp.mobilesafe.utils.MD5Util;
 /**
  * 获取系统安装的应用程序的信息
  *
- *2016-10-18  下午3:07:05
  */
 public class AppEngine {
 
     /**
      * 获取系统中安装所有应用程序的信息
      *
-     * 2016-10-18 下午3:07:41
      */
     public static List<AppInfo> getAllAppInfos(Context context){
         List<AppInfo> list = new ArrayList<AppInfo>();
@@ -39,8 +37,6 @@ public class AppEngine {
         for (PackageInfo packageInfo : installedPackages) {
             //包名
             String packageName = packageInfo.packageName;
-
-
             //获取应用程序的特征码
             //获取应用程序的签名信息
             Signature[] signatures = packageInfo.signatures;

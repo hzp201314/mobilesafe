@@ -19,6 +19,9 @@ import com.hzp.mobilesafe.engine.AppEngine;
 
 import java.util.List;
 
+/**
+ * 流量统计
+ */
 public class TrafficActivity extends Activity {
 
     private ListView mListView;
@@ -33,7 +36,6 @@ public class TrafficActivity extends Activity {
     /**
      * 初始化控件
      *
-     * 2016-10-24 下午3:22:51
      */
     private void initView() {
         mListView = (ListView) findViewById(R.id.traffic_lv_listview);
@@ -43,7 +45,6 @@ public class TrafficActivity extends Activity {
     /**
      * 获取数据展示数据
      *
-     * 2016-10-24 下午3:39:24
      */
     private void initData() {
         //系统中所有应用程序的信息
@@ -52,12 +53,14 @@ public class TrafficActivity extends Activity {
 
     private class MyAsyncTaks extends AsyncTask<Void, Void, Void> {
 
+        /*子线程中执行*/
         @Override
         protected Void doInBackground(Void... params) {
             list = AppEngine.getAllAppInfos(getApplicationContext());
             return null;
         }
 
+        /*子线程执行之后*/
         @Override
         protected void onPostExecute(Void result) {
             mListView.setAdapter(new Myadapter());
@@ -66,6 +69,8 @@ public class TrafficActivity extends Activity {
     }
 
     private class Myadapter extends BaseAdapter {
+
+
 
         @Override
         public int getCount() {
@@ -84,27 +89,42 @@ public class TrafficActivity extends Activity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            View view = View.inflate(getApplicationContext(), R.layout.traffic_listview_item, null);
+            final View view;
+            ViewHolder viewHolder;
 
-            ImageView mIcon = (ImageView) view.findViewById(R.id.item_iv_icon);
-            TextView mName = (TextView) view.findViewById(R.id.item_tv_name);
-            TextView mTx = (TextView) view.findViewById(R.id.item_tv_tx);
-            TextView mRx = (TextView) view.findViewById(R.id.item_tv_rx);
+            //TODO 复用缓存
+            if(convertView==null) {
+                view = View.inflate( getApplicationContext(), R.layout.traffic_listview_item, null );
+                viewHolder=new ViewHolder();
+                viewHolder.mIcon = (ImageView) view.findViewById( R.id.item_iv_icon );
+                viewHolder.mName = (TextView) view.findViewById( R.id.item_tv_name );
+                viewHolder.mTx = (TextView) view.findViewById( R.id.item_tv_tx );
+                viewHolder.mRx = (TextView) view.findViewById( R.id.item_tv_rx );
+                view.setTag( viewHolder );
+            }else {
+                view=convertView;
+                viewHolder= (ViewHolder) view.getTag();
+            }
+            final AppInfo appInfo = list.get(position);
+            viewHolder.mIcon.setImageDrawable(appInfo.icon);
+            viewHolder.mName.setText(appInfo.name);
 
-            AppInfo appInfo = list.get(position);
-            mIcon.setImageDrawable(appInfo.icon);
-            mName.setText(appInfo.name);
-
-            //proc目录的资源，重启手机自动清零
+            //proc目录的资源，重启手机自动清零 市面上的应用是跟运营商合作暴露接口查询的流量信息（交钱）
             long uidTxBytes = TrafficStats.getUidTxBytes(appInfo.uid);//根据应用的uid获取应用的上传的流量
-            mTx.setText("上传:"+ Formatter.formatFileSize(getApplicationContext(), uidTxBytes));
+            viewHolder.mTx.setText("上传:"+ Formatter.formatFileSize(getApplicationContext(), uidTxBytes));
 
             long uidRxBytes = TrafficStats.getUidRxBytes(appInfo.uid);//根据应用的uid获取应用的下载的流量
-            mRx.setText("下载:"+Formatter.formatFileSize(getApplicationContext(), uidRxBytes));
+            viewHolder.mRx.setText("下载:"+Formatter.formatFileSize(getApplicationContext(), uidRxBytes));
 
             return view;
         }
 
+    }
+    static class ViewHolder{
+        ImageView mIcon ;
+        TextView mName ;
+        TextView mTx ;
+        TextView mRx ;
     }
 
 

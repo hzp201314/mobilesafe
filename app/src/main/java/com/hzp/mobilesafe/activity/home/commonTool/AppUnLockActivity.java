@@ -16,6 +16,9 @@ import android.widget.Toast;
 
 import com.hzp.mobilesafe.R;
 
+/**
+ * 程序锁解锁界面
+ */
 public class AppUnLockActivity extends Activity {
 
     private String packageName;
@@ -36,7 +39,6 @@ public class AppUnLockActivity extends Activity {
     /**
      * 初始化控件的操作
      *
-     * 2016-10-24 上午10:30:27
      */
     private void initView() {
         mIcon = (ImageView) findViewById(R.id.appunlock_iv_icon);
@@ -49,7 +51,6 @@ public class AppUnLockActivity extends Activity {
     /**
      * 根据包名获取应用程序信息，展示应用程序的信息
      *
-     * 2016-10-24 上午10:31:37
      */
     private void getMessage() {
         PackageManager pm = getPackageManager();
@@ -85,6 +86,10 @@ public class AppUnLockActivity extends Activity {
         super.onBackPressed();
     }
 
+    /**
+     * 点击home键最小化再次打开其他加锁应用界面时信息不更新
+     * 界面不可见时结束activity
+     */
     @Override
     protected void onStop() {
         finish();
@@ -93,7 +98,7 @@ public class AppUnLockActivity extends Activity {
     /**
      * 解锁的点击事件
      *@param view
-     * 2016-10-24 上午10:48:39
+     *
      */
     public void unlock(View view) {
         //获取输入的密码

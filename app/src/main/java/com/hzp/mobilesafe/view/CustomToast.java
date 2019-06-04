@@ -14,7 +14,7 @@ import com.hzp.mobilesafe.utils.SharedPreferencesUtil;
 /**
  * created by hzp on 2019/5/20 16:04
  * 作者：codehan
- * 描述：
+ * 描述：自定义吐司
  */
 public class CustomToast implements View.OnTouchListener {
     private Context mContext;
@@ -24,6 +24,10 @@ public class CustomToast implements View.OnTouchListener {
     private int startY;
     private WindowManager.LayoutParams params;
 
+    /**
+     * 重写自定义吐司构造函数 传入一个context
+     * @param context 上下文
+     */
     public CustomToast(Context context){
         this.mContext = context;
     }
@@ -31,7 +35,7 @@ public class CustomToast implements View.OnTouchListener {
     /**
      * 显示自定义的toast
      *@param address : 要显示的号码归属地
-     * 2016-10-16 下午5:11:00
+     *
      */
     public void showToast(String address){
         //将一个veiw对象添加到窗口中显示就可以了
@@ -55,11 +59,13 @@ public class CustomToast implements View.OnTouchListener {
         params.height = WindowManager.LayoutParams.WRAP_CONTENT; //设置高度，包裹内容
         params.width = WindowManager.LayoutParams.WRAP_CONTENT; // 设置宽度，包裹内容
         params.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE //设置不能获取焦点
-                | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE   // 不能触摸
+//                | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE   // 不能触摸
                 | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;  // 保持屏幕长亮
         params.format = PixelFormat.TRANSLUCENT;  //设置背景半透明
-        params.type = WindowManager.LayoutParams.TYPE_TOAST;//设置控件的类型是toast类型
-
+        //WindowManager.LayoutParams.TYPE_TOAST设置控件的类型是toast类型，toast默认没有触摸事件
+        //WindowManager.LayoutParams.TYPE_PRIORITY_PHONE，优先于电话的类型，可以在电话界面上进行操作的类型，
+        // 需要添加权限android.permission.SYSTEM_ALERT_WINDOW
+        params.type = WindowManager.LayoutParams.TYPE_PRIORITY_PHONE;
         //设置Toast的触摸监听事件
         view.setOnTouchListener(this);
 
@@ -69,10 +75,8 @@ public class CustomToast implements View.OnTouchListener {
     /**
      * 控件的触摸操作
      *
-     * @param v
-     *            ： 触摸的控件的view对象
-     * @param event
-     *            ： 触摸的事件
+     * @param v ： 触摸的控件的view对象
+     * @param event ： 触摸的事件
      *
      */
     @Override
@@ -116,7 +120,6 @@ public class CustomToast implements View.OnTouchListener {
     /**
      * 隐藏自定义toast
      *
-     * 2016-10-17 上午9:23:57
      */
     public void hideToast(){
         if (view != null) {

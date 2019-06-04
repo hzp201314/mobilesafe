@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.SystemClock;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.hzp.mobilesafe.bean.SMSInfo;
@@ -18,7 +19,7 @@ import java.util.List;
 /**
  * created by hzp on 2019/5/25 09:34
  * 作者：codehan
- * 描述：
+ * 描述：读取短信，备份短信的操作
  */
 public class SmsEngine {
     //崔小可
@@ -27,6 +28,7 @@ public class SmsEngine {
         /**设置最大进度方法**/
         public void setMax(int max);
 
+        /*设置当前进度*/
         public void setProgress(int progress);
     }
 
@@ -35,7 +37,6 @@ public class SmsEngine {
     /**
      * 读取短信的操作
      *
-     * 2016-10-22 上午10:21:00
      */
     public static void readSms(Context context, ReadSmsListener readSmsListener){
         List<SMSInfo> list = new ArrayList<SMSInfo>();
@@ -57,7 +58,7 @@ public class SmsEngine {
             String type = cursor.getString(2);
             String body = cursor.getString(3);
 
-            System.out.println("address:"+address+" date:"+date+" type:"+type+" body:"+body);
+            Log.d( "SmsEngine", "readSms: "+"address:"+address+" date:"+date+" type:"+type+" body:"+body );
 
             SMSInfo smsInfo = new SMSInfo(address, date, type, body);
             list.add(smsInfo);

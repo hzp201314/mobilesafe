@@ -19,6 +19,9 @@ import com.hzp.mobilesafe.R;
 import com.hzp.mobilesafe.bean.CommonNumberGroupsInfo;
 import com.hzp.mobilesafe.db.dao.CommonNumberDao;
 
+/**
+ * 常用电话号码
+ */
 public class CommonNumberActivity extends Activity {
     private ExpandableListView mListView;
     private List<CommonNumberGroupsInfo> list;
@@ -36,7 +39,6 @@ public class CommonNumberActivity extends Activity {
     /**
      * 初始化控件
      *
-     * 2016-10-18 上午10:19:00
      */
     private void initView() {
         mListView = (ExpandableListView) findViewById(R.id.commonnumber_elv_listview);
@@ -83,7 +85,7 @@ public class CommonNumberActivity extends Activity {
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
 
-                //拨打电话
+                //拨打电话 （需要打电话权限）
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_DIAL);//设置打电话的标示
                 intent.setData(Uri.parse("tel:"+list.get(groupPosition).child.get(childPosition).number));
@@ -98,7 +100,6 @@ public class CommonNumberActivity extends Activity {
     /**
      * 展示数据
      *
-     * 2016-10-18 上午10:19:46
      */
     private void initData() {
         list = CommonNumberDao.getGroup(this);
@@ -147,7 +148,7 @@ public class CommonNumberActivity extends Activity {
         @Override
         public View getGroupView(int groupPosition, boolean isExpanded,
                                  View convertView, ViewGroup parent) {
-            TextView textView = new TextView(getApplicationContext());
+            TextView textView = new TextView(getApplicationContext());//新建一个TextView作为组的View对象
             textView.setText(list.get(groupPosition).name);
             textView.setTextColor(Color.BLACK);
             textView.setBackgroundColor(Color.GRAY);

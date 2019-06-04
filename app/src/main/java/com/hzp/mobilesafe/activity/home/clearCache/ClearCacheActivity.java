@@ -38,6 +38,9 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 缓存清理
+ */
 public class ClearCacheActivity extends Activity implements View.OnClickListener {
 
     private ImageView mLine;
@@ -61,7 +64,6 @@ public class ClearCacheActivity extends Activity implements View.OnClickListener
     /**
      * 初始化控件
      *
-     * 2016-10-24 下午4:43:08
      */
     private void initView() {
         mLine = (ImageView) findViewById(R.id.clearcache_iv_line);
@@ -87,10 +89,10 @@ public class ClearCacheActivity extends Activity implements View.OnClickListener
     /**
      * 加载数据，显示数据
      *
-     * 2016-10-24 下午4:37:21
      */
     private void initData() {
         pm = getPackageManager();
+        //TODO 异步加载的问题，异步加载是不会停止的
         myAsyncTask = new MyAsyncTask();
         myAsyncTask.execute();
     }
@@ -98,10 +100,11 @@ public class ClearCacheActivity extends Activity implements View.OnClickListener
     //查询系统中所有的应用程序的信息，并展示
     private class MyAsyncTask extends AsyncTask<Void, CacheInfo, Void>{
 
+        /*子线程之前执行*/
         @Override
         protected void onPreExecute() {
 
-            //判断异步加载是否取消，如果取消不在执行我们的代码
+            //TODO 判断异步加载是否取消，如果取消不在执行我们的代码
             //isCancelled : 获取是否取消的标示
             if (myAsyncTask.isCancelled()) {
                 return;
@@ -128,6 +131,7 @@ public class ClearCacheActivity extends Activity implements View.OnClickListener
             super.onPreExecute();
         }
 
+        /*子线程中执行操作*/
         @Override
         protected Void doInBackground(Void... params) {
             //2.获取系统中安装应用程序的信息，并且实现获取一个展示一个的效果
@@ -137,6 +141,7 @@ public class ClearCacheActivity extends Activity implements View.OnClickListener
 
             //遍历集合
             for (AppInfo appInfo : allAppInfos) {
+                //TODO 加在for循环的原因是，一般取消操作是在异步加载中操作的
                 if (myAsyncTask.isCancelled()) {
                     return null;
                 }
@@ -155,11 +160,12 @@ public class ClearCacheActivity extends Activity implements View.OnClickListener
                 }
                 SystemClock.sleep(300);
             }
-            //publishProgress(values);//调用publishProgress方法可以间接的调用onProgressUpdate,只能在AsyncTask内部使用，不能再外部使用
+            //publishProgress(values);//调用publishProgress方法可以间接的调用onProgressUpdate,只能在AsyncTask内部使用，不能在外部使用
 
             return null;
         }
 
+        /*子线程执行之后操作*/
         @Override
         protected void onPostExecute(Void result) {
 
@@ -213,7 +219,7 @@ public class ClearCacheActivity extends Activity implements View.OnClickListener
             }
             //因为是每获取一个数据，展示一个数据，所以会频繁的调用onProgressUpdate方法，所以不能在onProgressUpdate给listview设置adapter
             myadapter.notifyDataSetChanged();
-            //2.8.没加载一个数据，listview自动滚动到listview的底部
+            //2.8.每加载一个数据，listview自动滚动到listview的底部
             mListView.smoothScrollToPosition(list.size());//滚动到listview的那个条目,position:条目的索引
 
             //2.1.0.设置没加载一个数据，显示进度条和包名缓存大小信息
@@ -254,6 +260,7 @@ public class ClearCacheActivity extends Activity implements View.OnClickListener
                 e.printStackTrace();
             }
 
+            //TODO 也有可能在aidl中取消异步加载操作
             if (myAsyncTask.isCancelled()) {
                 return;
             }
@@ -321,7 +328,7 @@ public class ClearCacheActivity extends Activity implements View.OnClickListener
                 viewHolder.mClear.setVisibility(View.GONE);
             }
 
-
+            //TODO 安卓系统禁止一个应用单个清除另一个应用的缓存，只能跳转到另一个应用的系统详情界面进行清除
             //点击清理按钮跳转到系统的详情界面
             viewHolder.mClear.setOnClickListener(new OnClickListener() {
 
@@ -362,11 +369,18 @@ public class ClearCacheActivity extends Activity implements View.OnClickListener
     }
 
 
-    //异步加载的问题，异步加载是不会停止的
+
 
     @Override
     protected void onDestroy() {
-        //只是设置异步加载取消标示，true:可以取消，false:不可以取消，但是并不会真正的取消异步加载操作
+        //TODO 异步加载的问题，异步加载是不会停止的
+        //TODO 只是设置异步加载取消标示，true:可以取消，false:不可以取消，
+        //TODO 但是并不会真正的取消异步加载操作
+        //TODO 一次异步加载未完成会阻塞第二次异步加载操作，无法解决，但可以简化
+        //TODO 在onPreExecute()、doInBackground(Void... params)、onPostExecute(Void result)、
+        //TODO onProgressUpdate(CacheInfo... values)、aidl获取缓存大小方法中判断异步加载是否取消，如果取消就不进行操作。
+        //TODO 从而避免二次异步加载操作阻塞.
+        //TODO 本质：一个异步（前）在执行空操作，一个异步（后）在执行数据加载操作。
         myAsyncTask.cancel(true);
         super.onDestroy();
     }
@@ -374,9 +388,14 @@ public class ClearCacheActivity extends Activity implements View.OnClickListener
     /**
      * 一键清理的点击事件
      *@param view
-     * 2016-10-25 上午11:20:18
+     *
      */
     public void clearall(View view) {
+        //TODO 安卓系统禁止一个应用清除另一个应用的缓存，此处使用安卓系统的一个机制(bug)
+        //TODO 谷歌已经在高版本（5.0~）修复这个bug，已经无法使用！！！！！！！！！
+        //TODO
+        //请求使用空间，设置使用的空间无限大，系统会自动清理缓存，该方法被隐藏，只能通过反射aidl
+        //变相使用清理操作，需要清理缓存权限android.permission.CLEAR_APP_CACHE
         //freeStorageAndNotify(long freeStorageSize, IPackageDataObserver observer)//请求使用的空间
         try {
             Method method = PackageManager.class.getDeclaredMethod( "freeStorageAndNotify", long.class, IPackageDataObserver.class );
@@ -386,7 +405,7 @@ public class ClearCacheActivity extends Activity implements View.OnClickListener
                 public void onRemoveCompleted(String packageName, boolean succeeded)
                         throws RemoteException {
                     //表示清理缓存成功，重新扫描
-                    //android系统中所有的aidl都是在子线程中的执行
+                    //TODO android系统中所有的aidl都是在子线程中的执行
                     runOnUiThread( new Runnable() {
                         public void run() {
                             initData();

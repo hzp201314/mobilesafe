@@ -33,8 +33,6 @@ public class CustomProgressBar extends RelativeLayout {
     }
     /**
      * 将进度条布局添加自定义控件中
-     *
-     * 2016-10-18 上午11:47:37
      */
     private void initView() {
         View view = View.inflate(getContext(), R.layout.customprogress, null);
@@ -51,7 +49,6 @@ public class CustomProgressBar extends RelativeLayout {
     /**
      * 提供给activity使用的，用来设置Text控件的值
      *@param text : activity传递过来的设置给textview显示的值
-     * 2016-10-18 上午11:56:20
      */
     public void setText(String text){
         mText.setText(text);
@@ -60,7 +57,6 @@ public class CustomProgressBar extends RelativeLayout {
     /**
      * 提供给activity使用的，用来设置left控件的值
      *@param left ：activity传递过来的设置给textview显示的值
-     * 2016-10-18 上午11:56:20
      */
     public void setLeft(String left){
         mLeft.setText(left);
@@ -69,7 +65,6 @@ public class CustomProgressBar extends RelativeLayout {
     /**
      * 提供给activity使用的，用来设置right控件的值
      *@param Right : activity传递过来的设置给textview显示的值
-     * 2016-10-18 上午11:56:20
      */
     public void setRight(String Right){
         mRight.setText(Right);
@@ -78,7 +73,6 @@ public class CustomProgressBar extends RelativeLayout {
     /**
      * 提供给activity使用的，设置进度
      *@param progress ： activity传递过来的进度
-     * 2016-10-18 上午11:58:37
      */
     public void setProgress(int progress){
         mPB.setProgress(progress);//设置progressbar的进度

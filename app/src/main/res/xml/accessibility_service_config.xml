@@ -6,7 +6,7 @@
     />
 
     <!--
-        description :
+        description :   描述信息
         packageNames ： 辅助功能服务所在的应用的包名，不写，默认当前应用程序的包名
         accessibilityEventTypes ： 监听行为的类型
         accessibilityFlags ： 额外信息获取的标签，不写，默认flagDefault类型

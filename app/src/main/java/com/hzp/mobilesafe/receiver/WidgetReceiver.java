@@ -10,7 +10,7 @@ import com.hzp.mobilesafe.service.WidgetService;
 /**
  * created by hzp on 2019/5/25 08:48
  * 作者：codehan
- * 描述：
+ * 描述：桌面小控件广播接收者
  */
 public class WidgetReceiver extends AppWidgetProvider {
 

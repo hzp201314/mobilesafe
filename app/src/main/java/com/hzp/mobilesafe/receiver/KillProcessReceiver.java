@@ -9,7 +9,7 @@ import com.hzp.mobilesafe.engine.ProcessEngine;
 /**
  * created by hzp on 2019/5/25 09:23
  * 作者：codehan
- * 描述：
+ * 描述：清理进程广播接收者
  */
 public class KillProcessReceiver  extends BroadcastReceiver {
 

@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 /**
  * created by hzp on 2019/5/20 16:06
  * 作者：codehan
- * 描述：号码归属地的查询操作
+ * 描述：号码归属地数据库的查询操作
  */
 public class AddressDao {
     /**
@@ -68,7 +68,7 @@ public class AddressDao {
                     //startsWith : 以什么样的字符开头
                     if (number.length() >= 10 && number.length() <= 12 && number.startsWith("0")) {
                         //不同的区号也是有不同的归属地的，所以也要根据区号查询归属
-                        //查询3位区号的归属地  010   10
+                        //查询3位区号的归属地  010 -->  10
                         String area = number.substring(1, 3);
                         Cursor cursor = database.rawQuery("select location from data2 where area=?", new String[]{area});
                         if (cursor.moveToNext()) {

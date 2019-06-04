@@ -13,6 +13,9 @@ import android.text.TextUtils;
 import com.hzp.mobilesafe.db.dao.AddressDao;
 import com.hzp.mobilesafe.view.CustomToast;
 
+/**
+ * 号码归属地服务
+ */
 public class AddressService extends Service {
     private TelephonyManager tel;
     private MyphoneStateListener listener;
@@ -24,6 +27,10 @@ public class AddressService extends Service {
         // TODO Auto-generated method stub
         return null;
     }
+
+    /**
+     * 监听外拨广播接收者，需要权限android.permission.PROCESS_OUTGOING_CALLS
+     */
     private class MyOutGoingCall extends BroadcastReceiver {
 
         @Override
@@ -33,6 +40,9 @@ public class AddressService extends Service {
             String address = AddressDao.getAddress(context, number);
             if (!TextUtils.isEmpty(address)) {
                 customToast.showToast(address);
+                //外拨和来电的挂断操作都是共用一个监听电话状态
+                // MyphoneStateListener的TelephonyManager.CALL_STATE_IDLE:// 空闲状态，挂断状态
+                //挂断电话也会隐藏自定义吐司
             }
         }
 

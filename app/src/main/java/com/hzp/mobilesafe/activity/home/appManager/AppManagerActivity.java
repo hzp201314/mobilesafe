@@ -34,6 +34,9 @@ import com.hzp.mobilesafe.view.CustomProgressBar;
 
 import java.util.List;
 
+/**
+ * 软件管家
+ */
 public class AppManagerActivity extends Activity implements View.OnClickListener {
     private CustomProgressBar mMemory;
     private CustomProgressBar mSD;
@@ -62,7 +65,6 @@ public class AppManagerActivity extends Activity implements View.OnClickListener
     /**
      * 初始化控件
      *
-     * 2016-10-18 下午2:42:44
      */
     private void initView() {
         mMemory = (CustomProgressBar) findViewById(R.id.app_cpb_memory);
@@ -78,7 +80,6 @@ public class AppManagerActivity extends Activity implements View.OnClickListener
     /**
      * 设置listview的滚动监听事件
      *
-     * 2016-10-18 下午4:52:21
      */
     private void setListViewOnScrollListener() {
         mListView.setOnScrollListener(new OnScrollListener() {
@@ -100,7 +101,7 @@ public class AppManagerActivity extends Activity implements View.OnClickListener
                 hidepopupwindow();
 
                 if (userAppInfos != null && systemAppInfos != null) {
-                    //判断当前界面显示的第一个条目是否大于或者等于系统程序个数的条目的索引
+                    //判断当前界面显示的第一个条目索引是否大于或者等于系统程序个数的条目的索引
                     if (firstVisibleItem >= userAppInfos.size()+1) {
                         mCount.setText("系统程序("+systemAppInfos.size()+")");
                     }else{
@@ -113,7 +114,6 @@ public class AppManagerActivity extends Activity implements View.OnClickListener
     /**
      * 设置listview的条目点击事件，显示气泡
      *
-     * 2016-10-18 下午5:03:54
      */
     private void setListViewOnItemListener() {
         mListView.setOnItemClickListener(new OnItemClickListener() {
@@ -165,7 +165,6 @@ public class AppManagerActivity extends Activity implements View.OnClickListener
     /**
      * 隐藏popupwindow
      *
-     * 2016-10-18 下午5:26:48
      */
     private void hidepopupwindow() {
         if (popupWindow != null) {
@@ -177,7 +176,6 @@ public class AppManagerActivity extends Activity implements View.OnClickListener
     /**
      * 显示存储空间信息操作
      *
-     * 2016-10-18 下午2:44:11
      */
     private void setMemoryMsg() {
         //1.内存
@@ -219,7 +217,6 @@ public class AppManagerActivity extends Activity implements View.OnClickListener
     /**
      * 获取数据展示数据
      *
-     * 2016-10-18 下午3:48:59
      */
     private void initData() {
         new Thread(){
@@ -279,11 +276,11 @@ public class AppManagerActivity extends Activity implements View.OnClickListener
     /**
      * 卸载操作
      *
-     * 2016-10-20 上午9:40:26
      */
     private void uninstall() {
         //如何打开系统的卸载界面
         /**
+         * 卸载页面过滤条件
          * <intent-filter>
          <action android:name="android.intent.action.VIEW" />
          <action android:name="android.intent.action.DELETE" />
@@ -323,7 +320,6 @@ public class AppManagerActivity extends Activity implements View.OnClickListener
     /**
      * 打开应用程序
      *
-     * 2016-10-20 上午9:56:42
      */
     private void open() {
         PackageManager pm = getPackageManager();
@@ -337,7 +333,6 @@ public class AppManagerActivity extends Activity implements View.OnClickListener
     /**
      * 分享
      *
-     * 2016-10-20 上午10:27:53
      */
     private void share() {
         /**
@@ -362,7 +357,6 @@ public class AppManagerActivity extends Activity implements View.OnClickListener
     /**
      * 跳转到详情界面
      *
-     * 2016-10-20 上午10:35:12
      */
     private void info() {
         /**
@@ -458,10 +452,10 @@ public class AppManagerActivity extends Activity implements View.OnClickListener
                 //AppInfo appInfo = allAppInfos.get(position);
                 //要从两个集合中获取数据
                 if (position <= userAppInfos.size()) {
-                    //用户集合中获取数据
+                    //用户集合中获取数据 position-1:当前position减去一个标题样式
                     appInfo = userAppInfos.get(position-1);
                 }else{
-                    //系统集合中获取数据
+                    //系统集合中获取数据  position - userAppInfos.size() - 2：当前position减去用户程序减去两标题样式
                     appInfo = systemAppInfos.get(position - userAppInfos.size() - 2);
                 }
                 viewHolder.mIcon.setImageDrawable(appInfo.icon);

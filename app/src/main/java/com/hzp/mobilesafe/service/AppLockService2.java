@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * created by hzp on 2019/5/25 10:18
  * 作者：codehan
- * 描述：
+ * 描述： 辅助功能的服务
  */
 public class AppLockService2 extends AccessibilityService {
     private List<String> list;

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.SystemClock;
+import android.util.Log;
 
 import com.hzp.mobilesafe.bean.BlackNumberInfo;
 import com.hzp.mobilesafe.db.BlackNumberConstants;
@@ -16,7 +17,7 @@ import java.util.List;
 /**
  * created by hzp on 2019/5/20 15:07
  * 作者：codehan
- * 描述：
+ * 描述：查询黑名单数据库操作
  */
 public class BlackNumberDao {
 
@@ -33,9 +34,10 @@ public class BlackNumberDao {
      * @param blacknumber
      *            ： 号码
      * @param mode
-     *            ： 拦截类型 2016-10-14 上午9:32:23
+     * @return       ： 拦截类型
      */
     public boolean add(String blacknumber, int mode) {
+        //得到数据库
         SQLiteDatabase database = blackNumberOpenHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         // key:数据库表中的字段名
@@ -48,7 +50,7 @@ public class BlackNumberDao {
         long insert = database.insert(BlackNumberConstants.TABLE_NAME, null,
                 values);
 
-        // 判断是否添加成功的操作
+        // 判断是否添加成功的操作 =-1添加失败 返回flase；  ！=-1添加成功 返回true
         return insert != -1;
     }
 
@@ -56,7 +58,7 @@ public class BlackNumberDao {
      * 根据号码删除表中对应的记录
      *
      * @param blackNumber
-     *            2016-10-14 上午9:41:32
+     * @return 0：删除失败，otherwise：删除成功
      */
     public boolean delete(String blackNumber) {
         SQLiteDatabase database = blackNumberOpenHelper.getWritableDatabase();
@@ -66,7 +68,7 @@ public class BlackNumberDao {
                 BlackNumberConstants.BLACKNUMBER + "=?",
                 new String[] { blackNumber });
 
-        System.out.println(delete);
+        Log.d( "111", "delete: "+delete );
 
         return delete != 0;
     }
@@ -77,7 +79,7 @@ public class BlackNumberDao {
      * @param blacknumber
      *            ： 号码
      * @param mode
-     *            ： 更新的拦截类型 2016-10-14 上午9:46:08
+     * @return           ： 更新的拦截类型
      */
     public boolean update(String blacknumber, int mode) {
         SQLiteDatabase database = blackNumberOpenHelper.getWritableDatabase();
@@ -90,7 +92,7 @@ public class BlackNumberDao {
                 BlackNumberConstants.BLACKNUMBER + "=?",
                 new String[] { blacknumber });
 
-        System.out.println(update);
+        Log.d( "111", "update: "+update );
 
         // 如果update是0标示更新失败
         return update != 0;
@@ -101,7 +103,7 @@ public class BlackNumberDao {
      * 根据黑名单号码查询拦截类型
      *
      * @param blackNumber
-     * @return 2016-10-14 上午9:52:14
+     * @return
      */
     public int queryMode(String blackNumber) {
 
@@ -130,10 +132,10 @@ public class BlackNumberDao {
 
     // 查询全部数据
 
+
     /**
-     * 查询全部数据的操作
-     *
-     * 2016-10-14 上午10:21:12
+     *  查询全部数据的操作
+     * @return
      */
     public List<BlackNumberInfo> queryAll() {
 
@@ -166,7 +168,9 @@ public class BlackNumberDao {
     /**
      * 查询部分数据的操作
      *
-     * 2016-10-14 上午10:21:12
+     * @param maxNum
+     * @param startIndex
+     * @return
      */
     public List<BlackNumberInfo> queryPartAll(int maxNum, int startIndex) {
 

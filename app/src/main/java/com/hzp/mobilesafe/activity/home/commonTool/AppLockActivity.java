@@ -27,6 +27,9 @@ import com.hzp.mobilesafe.engine.AppEngine;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 程序锁界面
+ */
 public class AppLockActivity extends Activity implements View.OnClickListener {
 
     private AppLockDao appLockDao;
@@ -55,7 +58,6 @@ public class AppLockActivity extends Activity implements View.OnClickListener {
     /**
      * 初始化控件
      *
-     * 2016-10-22 下午3:15:24
      */
     private void initView() {
         mBtnUnLock = (Button) findViewById(R.id.applock_btn_unlock);
@@ -106,7 +108,6 @@ public class AppLockActivity extends Activity implements View.OnClickListener {
     /**
      * 加载展示数据
      *
-     * 2016-10-22 下午3:38:09
      */
     private void initData() {
 		/*new Thread(){
@@ -147,7 +148,9 @@ public class AppLockActivity extends Activity implements View.OnClickListener {
         //参数1：子线程执行所需的参数类型
         //参数2：更新进度的类型
         //参数3：子线程返回结果的类型
-        //百度面试题：1.异步加载底层使用什么进行实现的：线程池；2：异步加载中执行多少个任务的时候就给new Thread一样的效率：5个；3：异步加载线程池最多可以有几个线程：128个
+        //百度面试题：1.异步加载底层使用什么进行实现的：线程池；
+        //          2：异步加载中执行多少个任务的时候就给new Thread一样的效率：5个；
+        //          3：异步加载线程池最多可以有几个线程：128个
 		/*new AsyncTask<String, Integer, String>(){
 			//在子线程之前执行的操作
 			@Override
@@ -182,11 +185,13 @@ public class AppLockActivity extends Activity implements View.OnClickListener {
     /**异步加载**/
     private class MyAsyncTask extends AsyncTask<Void, Void, Void> {
 
+        //在子线程之前执行的操作
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
 
+        //在子线程之中执行的操作
         @Override
         protected Void doInBackground(Void... params) {
             allAppInfos = AppEngine.getAllAppInfos(getApplicationContext());
@@ -208,6 +213,7 @@ public class AppLockActivity extends Activity implements View.OnClickListener {
             return null;
         }
 
+        //在子线程之后执行的操作
         @Override
         protected void onPostExecute(Void result) {
             unlockAdapter = new Myadapter(false);
@@ -217,6 +223,7 @@ public class AppLockActivity extends Activity implements View.OnClickListener {
             super.onPostExecute(result);
         }
 
+        //更新获取数据的进度，相当于在doInBackground请求数据的时候，可以显示请求的进度
         @Override
         protected void onProgressUpdate(Void... values) {
             // TODO Auto-generated method stub
@@ -315,7 +322,7 @@ public class AppLockActivity extends Activity implements View.OnClickListener {
                         return;
                     }else{
                         //需要判断是加锁还是解锁操作
-                        if (mIsLock) {
+                        if (mIsLock) {//解锁
                             //条目执行动画
                             view.startAnimation(rigthToLeft);
                             //问题：因为动画执行需要时间，但是listview的特性是，删除一个条目，下一个条目回往上补充，造成动画条目不一致
@@ -350,7 +357,7 @@ public class AppLockActivity extends Activity implements View.OnClickListener {
                                 }
                             });
 
-                        }else{
+                        }else{//加锁
                             //是未加锁的内容，执行的加锁的操作
                             view.startAnimation(leftToRight);
                             leftToRight.setAnimationListener(new AnimationListener() {
@@ -399,7 +406,6 @@ public class AppLockActivity extends Activity implements View.OnClickListener {
     /**
      * 设置Textview显示已加锁和未加锁个数
      *
-     * 2016-10-22 下午4:52:56
      */
     public void setCount(){
         mUnLockCount.setText("未加锁("+ unLocks.size()+")");

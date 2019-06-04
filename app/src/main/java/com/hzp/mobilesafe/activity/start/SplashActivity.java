@@ -57,15 +57,16 @@ public class SplashActivity extends Activity {
         initView();
         initActivity();
         //拷贝数据库
-        copyDB("address.db");
+        copyDB("address.db");//常用归属地数据库
+        copyDB("commonnum.db");//常用电话号码数据库
+        copyDB( "antivirus.db" );//拷贝病毒数据库
 
-/*
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            //android8.0以上通过startForegroundService启动service
-            startForegroundService(new Intent(this,ProtectedService.class));
-        } else {
-            startService(new Intent(this,ProtectedService.class));
-        }*/
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            //android8.0以上通过startForegroundService启动service
+//            startForegroundService(new Intent(this,ProtectedService.class));
+//        } else {
+//            startService(new Intent(this,ProtectedService.class));
+//        }
 
 
         //开启守护进程
@@ -75,7 +76,7 @@ public class SplashActivity extends Activity {
     /**
      * 创建快捷方式
      *
-     * 2016-10-26 下午2:45:43
+     *
      */
     private void createshortcut() {
         //判断快捷方式是否创建
@@ -99,7 +100,7 @@ public class SplashActivity extends Activity {
     /**
      * 拷贝数据库的方法
      *@param dbName
-     * 2016-10-16 下午2:48:30
+     *
      */
     private void copyDB(String dbName) {
         //判断如果数据库已经拷贝成功，不需要再次拷贝
@@ -111,7 +112,7 @@ public class SplashActivity extends Activity {
             InputStream in=null;
             FileOutputStream out = null;
             try {
-                //2.读取数据资源
+                //2.读取数据资源,打开assets文件中的名称
                 in = assets.open(dbName);
                 //getFilesDir() : data -> data -> 应用程序的包名 -> files
                 //getCacheDir() : data -> data -> 应用程序的包名 -> cache

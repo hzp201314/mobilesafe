@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * created by hzp on 2019/5/25 10:18
  * 作者：codehan
- * 描述：
+ * 描述：程序锁服务监听打开应用操作
  */
 public class AppLockService1 extends Service {
 
@@ -80,7 +80,6 @@ public class AppLockService1 extends Service {
     /**
      * 监听用户打开的应用程序的
      *
-     * 2016-10-24 上午9:39:43
      */
     private void isLock() {
         new Thread(){

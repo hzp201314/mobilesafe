@@ -38,6 +38,9 @@ import java.util.List;
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
+/**
+ * 进程管理
+ */
 public class ProcessManagerActivity extends Activity {
 
     private CustomProgressBar mMemory;
@@ -59,6 +62,7 @@ public class ProcessManagerActivity extends Activity {
     private SlidingDrawer mDrawer;
     private SettingView mIsShowSystem;
     private SettingView mScreenOff;
+    /*是否显示系统进程的标识*/
     private boolean isShowSystem;
 
     @Override
@@ -109,7 +113,6 @@ public class ProcessManagerActivity extends Activity {
     /**
      * 设置锁屏清理进程的点击事件
      *
-     * 2016-10-21 上午10:20:31
      */
     private void setOnScreenOffListener() {
         mScreenOff.setOnClickListener( new OnClickListener() {
@@ -143,7 +146,6 @@ public class ProcessManagerActivity extends Activity {
     /**
      * 显示系统进程的条目的点击事件
      *
-     * 2016-10-21 上午9:44:54
      */
     private void setOnIsShowSystemListener() {
 
@@ -174,7 +176,6 @@ public class ProcessManagerActivity extends Activity {
     /**
      * 抽屉的打开和关闭的监听操作
      *
-     * 2016-10-21 上午9:34:14
      */
     private void setOnSlidingDrawerListener() {
         // 打开抽屉的监听
@@ -200,7 +201,6 @@ public class ProcessManagerActivity extends Activity {
     /**
      * 消除动画
      *
-     * 2016-10-21 上午9:35:35
      */
     protected void closeAnimation() {
         mArrow1.clearAnimation();// 清除动画
@@ -214,7 +214,6 @@ public class ProcessManagerActivity extends Activity {
     /**
      * 实现箭头动画的
      *
-     * 2016-10-21 上午9:27:33
      */
     private void setAnimation() {
 
@@ -239,7 +238,6 @@ public class ProcessManagerActivity extends Activity {
     /**
      * listview的条目点击事件
      *
-     * 2016-10-20 下午4:12:20
      */
     private void onListViewItemClickListener() {
         mListView.setOnItemClickListener(new OnItemClickListener() {
@@ -278,7 +276,6 @@ public class ProcessManagerActivity extends Activity {
     /**
      * 展示进程和内存信息
      *
-     * 2016-10-20 上午11:54:51
      */
     private void setMsg() {
         // 展示进程信息
@@ -290,7 +287,6 @@ public class ProcessManagerActivity extends Activity {
     /**
      * 展示进程信息
      *
-     * 2016-10-20 上午11:55:21
      */
     private void setProcessCount() {
         // 获取进程信息
@@ -306,7 +302,6 @@ public class ProcessManagerActivity extends Activity {
     /**
      * 展示内存信息
      *
-     * 2016-10-20 上午11:58:11
      */
     private void setMemory() {
         // 获取内存信息
@@ -327,7 +322,6 @@ public class ProcessManagerActivity extends Activity {
     /**
      * 获取数据展示数据
      *
-     * 2016-10-18 下午3:48:59
      */
     private void initData() {
         new Thread() {
@@ -496,7 +490,7 @@ public class ProcessManagerActivity extends Activity {
      * 全选
      *
      * @param view
-     *            2016-10-20 下午4:25:59
+     *
      */
     public void all(View view) {
         // 将所有的标示改为true
@@ -522,7 +516,7 @@ public class ProcessManagerActivity extends Activity {
      * 反选
      *
      * @param view
-     *            2016-10-20 下午4:25:59
+     *
      */
     public void unall(View view) {
         // 取反的操作
@@ -546,7 +540,7 @@ public class ProcessManagerActivity extends Activity {
      * 清理进程
      *
      * @param view
-     *            2016-10-20 下午4:45:56
+     *
      */
     public void clear(View view) {
         // 清理所有选中的正在运行的进程

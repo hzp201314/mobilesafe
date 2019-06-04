@@ -11,12 +11,14 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 查询常用电话号码数据库数据操作
+ */
 public class CommonNumberDao {
     //查询组的数据
     /**
      * 获取组的数据
      *
-     * 2016-10-18 上午9:45:45
      */
     public static List<CommonNumberGroupsInfo> getGroup(Context context){
 
@@ -47,7 +49,7 @@ public class CommonNumberDao {
     /**
      * 获取组的孩子的数据
      *  idx : 组的idx
-     * 2016-10-18 上午9:52:59
+     *
      */
     public static List<CommonNumberChildInfo> getChild(Context context,String idx){
         List<CommonNumberChildInfo> list = new ArrayList<CommonNumberChildInfo>();

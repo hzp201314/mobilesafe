@@ -46,7 +46,6 @@ public class CommonToolActivity extends Activity implements View.OnClickListener
     /**
      * 初始化控件
      * <p>
-     * 2016-10-16 上午11:45:22
      */
     private void initView() {
         mAddress = (SettingView) findViewById( R.id.commontool_sv_address );
@@ -92,7 +91,7 @@ public class CommonToolActivity extends Activity implements View.OnClickListener
                 //显示进度条对话框
                 final ProgressDialog dialog = new ProgressDialog( CommonToolActivity.this );
                 dialog.setProgressStyle( ProgressDialog.STYLE_HORIZONTAL );//设置进度条对话框进度的样式，显示圆形还是进度操作
-                dialog.setCancelable( false );//设置对话框不可消失，true:消失,false:不可以消失
+                dialog.setCancelable( false );//设置对话框不可消失，true:消失,false:不可以消失;false:对话框弹出后点击或按返回键不消失;
                 dialog.show();
                 new Thread() {
                     public void run() {
@@ -143,12 +142,12 @@ public class CommonToolActivity extends Activity implements View.OnClickListener
                     e.printStackTrace();
                 }
                 break;
-            case R.id.commontool_sv_applock:
+            case R.id.commontool_sv_applock://程序锁
                 Intent intent3 = new Intent( this, AppLockActivity.class );
                 startActivity( intent3 );
                 break;
 
-            case R.id.commontool_sv_applockservice1:
+            case R.id.commontool_sv_applockservice1://电子狗1 开启关闭服务
                 Intent intent4 = new Intent(this, AppLockService1.class);
                 if (ServiceUtil.isServiceRunning(this,
                         "com.hzp.mobilesafe.service.AppLockService1")) {
@@ -166,7 +165,7 @@ public class CommonToolActivity extends Activity implements View.OnClickListener
                 }
                 mAppLockService1.toggle();
                 break;
-            case R.id.commontool_sv_applockservice2:
+            case R.id.commontool_sv_applockservice2://电子狗2
                 //跳转到系统的辅助功能界面
                 /**
                  * I/ActivityManager(1008):
@@ -185,6 +184,7 @@ public class CommonToolActivity extends Activity implements View.OnClickListener
     @Override
     protected void onStart() {
         super.onStart();
+        //回显电子狗服务1
         boolean b = ServiceUtil.isServiceRunning(this,
                 "com.hzp.mobilesafe.service.AppLockService1");
         mAppLockService1.setToggleOn(b);

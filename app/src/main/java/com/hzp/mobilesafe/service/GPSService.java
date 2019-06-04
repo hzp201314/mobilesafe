@@ -83,7 +83,7 @@ public class GPSService extends Service {
             double latitude = location.getLatitude();//获取定位的维度
             double longitude = location.getLongitude();//获取定位的经度
 
-            System.out.println("经度："+longitude+"  维度："+latitude);
+            Log.d( TAG, "onLocationChanged: 经度："+longitude+"  维度："+latitude );
             //只实现定位是没有用的，因为要是实现gps追踪，所以必须将经纬度坐标发送给安全号码，但是只发送经纬度坐标不够直观，所以最好是根据经纬度坐标获取实际的地理位置，将位置发送给安全号码
             getAddress(latitude,longitude);
         }
@@ -117,9 +117,9 @@ public class GPSService extends Service {
 
     /**
      * 根据经纬度坐标获取实际的地理位置
-     *@param latitude
-     *@param longitude
-     * 2016-10-13 上午11:55:24
+     *@param latitude 维度
+     *@param longitude 经度
+     *
      */
     public void getAddress(double latitude, double longitude) {
         //http://api.jisuapi.com/geoconvert/coord2addr?lat=40.100666415433174&lng=116.36786782697178&type=google&appkey=125fc44b695f29ca
@@ -158,20 +158,20 @@ public class GPSService extends Service {
      */
     protected void processJson(String json) {
         /**
-         * {
-         "msg": "ok",
-         "result": {
-         "address": "中国北京市昌平区郑上路",
-         "city": "北京市",
-         "country": "中国",
-         "description": "",
-         "district": "",
-         "lat": "40.100665000000006",
-         "lng": "116.36786666666667",
-         "province": "北京市",
-         "type": "google"
-         },
-         "status": "0"
+          {
+             "msg": "ok",
+             "result": {
+                 "address": "中国北京市昌平区郑上路",
+                 "city": "北京市",
+                 "country": "中国",
+                 "description": "",
+                 "district": "",
+                 "lat": "40.100665000000006",
+                 "lng": "116.36786666666667",
+                 "province": "北京市",
+                 "type": "google"
+             },
+             "status": "0"
          }
          */
         // { : jsonObject,可以理解为bean类；"msg"：可以理解为bean类中保存数据的变量 ; [] : list集合

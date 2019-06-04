@@ -3,7 +3,7 @@ package com.hzp.mobilesafe.db;
 /**
  * created by hzp on 2019/5/25 09:42
  * 作者：codehan
- * 描述：
+ * 描述：程序锁数据库信息及建表sql语句
  */
 public interface AppLockConstants {
     /** 数据库的名称 **/
@@ -18,7 +18,7 @@ public interface AppLockConstants {
 
     /** _id字段的名称 **/
     public static final String ID = "_id";
-    /** 号码的字段的名称 **/
+    /** 包名，用于唯一标识已加锁程序 **/
     public static final String PACKAGENAME = "packagename";
 
     /** 创建表的sql语句 **/

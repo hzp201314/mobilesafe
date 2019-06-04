@@ -37,6 +37,9 @@ import com.hzp.mobilesafe.engine.AppEngine;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 手机杀毒
+ */
 public class AntiVirusActivity extends Activity implements View.OnClickListener {
 
     private MyAsyncTask myAsyncTask;
@@ -113,7 +116,6 @@ public class AntiVirusActivity extends Activity implements View.OnClickListener 
     /**
      * 注册监听卸载的广播接受者
      *
-     * 2016-10-26 上午11:47:56
      */
     private void setRemoveReceiver() {
         myReceiver = new MyReceiver();
@@ -128,7 +130,6 @@ public class AntiVirusActivity extends Activity implements View.OnClickListener 
     /**
      * 初始化控件
      *
-     * 2016-10-26 上午9:19:46
      */
     private void initView() {
         mListView = (ListView) findViewById(R.id.anti_lv_listview);
@@ -151,9 +152,9 @@ public class AntiVirusActivity extends Activity implements View.OnClickListener 
     /**
      * 加载数据
      *
-     * 2016-10-26 上午9:12:42
      */
     private void initData() {
+        //异步加载
         myAsyncTask = new MyAsyncTask();
         myAsyncTask.execute();
     }
@@ -172,7 +173,7 @@ public class AntiVirusActivity extends Activity implements View.OnClickListener 
             mPb.setProgress(0);//保证每次都是从0进度开始
             antiviruslist.clear();//保证每次保存新的病毒数据
 
-            //加载数据之前先给listview设置adapter，方便后面进行更新界面操作
+            //4.0加载数据之前先给listview设置adapter，方便后面进行更新界面操作
             myadapter = new Myadapter();
             mListView.setAdapter(myadapter);
 
@@ -282,7 +283,6 @@ public class AntiVirusActivity extends Activity implements View.OnClickListener 
     /**
      * 执行动画的操作
      *
-     * 2016-10-26 上午11:23:55
      */
     public void startAnimaition() {
         //左右图片：平移+渐变    重新扫描的布局：渐变
@@ -311,7 +311,6 @@ public class AntiVirusActivity extends Activity implements View.OnClickListener 
     /**
      * 拆分进度条图片左边的图片
      *@param drawingCache
-     * 2016-10-26 上午11:05:35
      */
     public Bitmap getLeftBitmap(Bitmap drawingCache) {
         //1.设置新的图片的宽高
@@ -336,7 +335,6 @@ public class AntiVirusActivity extends Activity implements View.OnClickListener 
     /**
      * 拆分进度条图片右边的图片
      *@param drawingCache
-     * 2016-10-26 上午11:05:35
      */
     public Bitmap getRihtBitmap(Bitmap drawingCache) {
         //1.设置新的图片的宽高
@@ -447,7 +445,6 @@ public class AntiVirusActivity extends Activity implements View.OnClickListener 
     /**
      * 关门的动画
      *
-     * 2016-10-26 上午11:35:10
      */
     private void backAnimation() {
         //平移

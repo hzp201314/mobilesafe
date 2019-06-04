@@ -38,7 +38,7 @@ public class ProcessEngine {
     /**
      * 获取正在运行的进程数
      *@return
-     * 2016-10-20 上午11:12:49
+     *
      */
     public static int getRunningProcessCount(Context context){
         //进程管理者
@@ -49,20 +49,20 @@ public class ProcessEngine {
     /**
      * 获取总的进程数
      *@return
-     * 2016-10-20 上午11:12:49
+     *
      */
     public static int getAllProcessCount(Context context){
         //一个应用程序运行在一个进程中的，所以理论上一个应用程序对应一个进程
         PackageManager pm = context.getPackageManager();
         List<PackageInfo> installedPackages = pm.getInstalledPackages(PackageManager.GET_ACTIVITIES | PackageManager.GET_PROVIDERS | PackageManager.GET_RECEIVERS | PackageManager.GET_SERVICES);
         //因为android允许应用的四大组件单独存放到一个一个进程，所以有时候就不是一个应用程序对应一个进程，可能是一个应用程序对应多个进程
-        Set<String> set = new HashSet<String>();
+        Set<String> set = new HashSet<String>();/*集合保存数据不能重复*/
         for (PackageInfo packageInfo : installedPackages) {
             //将应用程序的进程名称保存到set中
             //processName : 进程名称
             set.add(packageInfo.applicationInfo.processName);
             //获取四大组件所在的进程
-            ActivityInfo[] activities = packageInfo.activities;//获取应用程序中清单文件中所以acitivity信息
+            ActivityInfo[] activities = packageInfo.activities;//获取应用程序中清单文件中所有acitivity信息
             if (activities != null) {
                 for (ActivityInfo activityInfo : activities) {
                     //activityInfo.processName : 组件所在的进程的名称
@@ -96,7 +96,7 @@ public class ProcessEngine {
      * 获取空闲内存
      *@param context
      *@return
-     * 2016-10-20 上午11:34:33
+     *
      */
     public static long getFreeMemory(Context context){
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
@@ -110,7 +110,7 @@ public class ProcessEngine {
      * 获取总内存
      *@param context
      *@return
-     * 2016-10-20 上午11:34:33
+     *
      */
     @SuppressLint("NewApi")
     public static long getALLMemory(Context context){
@@ -136,7 +136,6 @@ public class ProcessEngine {
     /**
      * 重载方法，通过另外的方式获取进程的总内存
      *@return
-     * 2016-10-20 上午11:42:06
      * @Deprecated : 方法过时
      */
     @Deprecated
@@ -167,7 +166,6 @@ public class ProcessEngine {
     /**
      * 获取正在运行的进程的信息
      *
-     * 2016-10-20 下午2:42:22
      */
     public static List<ProcessInfo> getRunningProcessInfo(Context context){
 
@@ -241,7 +239,6 @@ public class ProcessEngine {
     /**
      * 清理所有进程
      *
-     * 2016-10-21 上午10:28:29
      */
     public static void killALLProcess(Context context){
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);

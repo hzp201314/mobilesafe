@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
 import android.text.format.Formatter;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.hzp.mobilesafe.R;
@@ -21,7 +22,7 @@ import com.hzp.mobilesafe.receiver.WidgetReceiver;
 /**
  * created by hzp on 2019/5/25 08:49
  * 作者：codehan
- * 描述：
+ * 描述：桌面小程序更新服务
  */
 public class WidgetService extends Service {
 
@@ -36,11 +37,15 @@ public class WidgetService extends Service {
         return null;
     }
 
+    /**
+     * 广播接收者
+     * 在广播接收者里面更新桌面小控件操作
+     */
     private class MyReceiver extends BroadcastReceiver{
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            System.out.println("widget更新了..");
+            Log.d( "WidgetService", "onReceive: widget更新了..." );
             ComponentName provider = new ComponentName(context, WidgetReceiver.class);
             //参数1：当前应用程序的包名
             //参数2：布局文件的id
@@ -59,6 +64,7 @@ public class WidgetService extends Service {
 
             //一键清理操作
             //因为点击一键清理，没有跳转，没有开启服务，只能发送自定义的广播
+            //发送自定义广播需要定义广播接收者，法1：代码定义广播接收者处理; 法2：清单文件中注册
             Intent clearIntent = new Intent();
             clearIntent.setAction("com.hzp.mobilesafe.CLEAR_PROCESS");
             PendingIntent clear = PendingIntent.getBroadcast(context, 102, clearIntent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -108,10 +114,10 @@ public class WidgetService extends Service {
         operation = PendingIntent.getBroadcast(this, 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         //type : 闹铃类型
-        //RTC ：使用硬件的时间，发送闹铃不通过手机提醒
-        // RTC_WAKEUP : 使用硬件的时间，发送闹铃通过手机提醒
-        //ELAPSED_REALTIME : 使用真实的时间，发送闹铃不通过手机提醒
-        //ELAPSED_REALTIME_WAKEUP : 使用真实的时间，发送闹铃通过手机提醒
+            //RTC ：使用硬件的时间，发送闹铃不通过手机提醒
+            //RTC_WAKEUP : 使用硬件的时间，发送闹铃通过手机提醒
+            //ELAPSED_REALTIME : 使用真实的时间，发送闹铃不通过手机提醒
+            //ELAPSED_REALTIME_WAKEUP : 使用真实的时间，发送闹铃通过手机提醒
         //triggerAtMillis : 当前的时间
         //intervalMillis : 间隔时间
         //operation : 执行的操作,PendingIntent:延迟意图，类似点击事件的使用方式，只有触发条件生效，才会执行intent操作

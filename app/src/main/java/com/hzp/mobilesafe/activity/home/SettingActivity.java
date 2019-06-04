@@ -33,7 +33,6 @@ public class SettingActivity extends Activity {
     /**
      * 初始化控件
      *
-     * 2016-10-8 下午3:12:38
      */
     private void initView() {
         mUpdate = (SettingView) findViewById(R.id.setting_sv_update);
@@ -52,7 +51,6 @@ public class SettingActivity extends Activity {
     /**
      * 设置自动更新的条目的点击事件
      *
-     * 2016-10-8 下午3:13:29
      */
     private void update() {
 
@@ -86,9 +84,12 @@ public class SettingActivity extends Activity {
     /**
      * 开启关闭骚扰拦截服务的操作
      *
-     * 2016-10-16 上午9:30:47
      */
     private void blacknumber() {
+//        由于最小化窗口，可以手动关闭服务，但是设置界面不会走oncreate方法，故需要把回显操作放在onstart方法中。
+//        // 2.再次进入的时候，判断是否开启，设置开关状态
+//       boolean b= ServiceUtil.isServiceRunning( this,"com.hzp.mobilesafe.service.BlackNumberService" );
+//       mBlackNumber.setToggleOn( b );//设置开关状态，回显操作
 
         // 1.开启/关闭服务
         mBlackNumber.setOnClickListener(new OnClickListener() {
@@ -110,6 +111,7 @@ public class SettingActivity extends Activity {
                     // 关闭 -> 点击开启服务
                     startService(intent);
                 }
+                /*改变开关状态*/
                 mBlackNumber.toggle();
             }
         });
@@ -118,7 +120,6 @@ public class SettingActivity extends Activity {
     /**
      * 号码归属地操作
      *
-     * 2016-10-16 下午4:52:11
      */
     private void address() {
         // 1.开启/关闭服务
@@ -144,7 +145,6 @@ public class SettingActivity extends Activity {
     /**
      * 归属地显示风格设置
      *
-     * 2016-10-17 上午10:34:46
      */
     private void addressStyle() {
         mAddressStyle.setOnClickListener(new OnClickListener() {

@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * created by hzp on 2019/5/20 14:59
  * 作者：codehan
- * 描述：
+ * 描述：黑名单数据库构建
  */
 public class BlackNumberOpenHelper extends SQLiteOpenHelper {
 
